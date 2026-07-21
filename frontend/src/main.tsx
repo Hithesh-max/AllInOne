@@ -4,13 +4,16 @@ import App from './App.tsx'
 import './index.css'
 import { AuthProvider } from './context/AuthContext'
 import { ThemeProvider } from './context/ThemeContext'
+import { ModeProvider } from './context/ModeContext'
 
 ReactDOM.createRoot(document.getElementById('root')!).render(
   <React.StrictMode>
     <ThemeProvider>
-      <AuthProvider>
-        <App />
-      </AuthProvider>
+      <ModeProvider>
+        <AuthProvider>
+          <App />
+        </AuthProvider>
+      </ModeProvider>
     </ThemeProvider>
   </React.StrictMode>,
 )

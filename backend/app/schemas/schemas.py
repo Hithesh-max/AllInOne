@@ -57,6 +57,7 @@ class InternshipApplicationCreate(BaseModel):
     deadline: Optional[date] = None
     match_score: Optional[int] = None
     notes: Optional[str] = None
+    timeline: List[Dict[str, Any]] = []
 
 class InternshipApplicationResponse(BaseModel):
     id: int
@@ -67,6 +68,7 @@ class InternshipApplicationResponse(BaseModel):
     deadline: Optional[date] = None
     match_score: Optional[int] = None
     notes: Optional[str] = None
+    timeline: Optional[List[Dict[str, Any]]] = []
 
     class Config:
         from_attributes = True
@@ -78,6 +80,7 @@ class HackathonRegistrationCreate(BaseModel):
     status: str = "Registered"
     team_status: Optional[str] = None
     notes: Optional[str] = None
+    timeline: List[Dict[str, Any]] = []
 
 class HackathonRegistrationResponse(BaseModel):
     id: int
@@ -87,6 +90,7 @@ class HackathonRegistrationResponse(BaseModel):
     status: str
     team_status: Optional[str] = None
     notes: Optional[str] = None
+    timeline: Optional[List[Dict[str, Any]]] = []
 
     class Config:
         from_attributes = True
@@ -98,6 +102,7 @@ class ScholarshipApplicationCreate(BaseModel):
     status: str = "Applied"
     deadline: Optional[date] = None
     notes: Optional[str] = None
+    timeline: List[Dict[str, Any]] = []
 
 class ScholarshipApplicationResponse(BaseModel):
     id: int
@@ -107,6 +112,7 @@ class ScholarshipApplicationResponse(BaseModel):
     status: str
     deadline: Optional[date] = None
     notes: Optional[str] = None
+    timeline: Optional[List[Dict[str, Any]]] = []
 
     class Config:
         from_attributes = True
@@ -211,6 +217,7 @@ class TravelPlanResponse(BaseModel):
 class ChatMessageCreate(BaseModel):
     session_id: str
     content: str
+    active_document: Optional[str] = None
 
 class ChatMessageResponse(BaseModel):
     id: int

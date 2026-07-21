@@ -5,6 +5,24 @@
     <link rel="icon" type="image/svg+xml" href="/vite.svg" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>CampusCopilot AI - Your Personal AI Career & Student Assistant</title>
+    <script>
+      window.addEventListener('error', function(event) {
+        var errorDiv = document.createElement('div');
+        errorDiv.style.position = 'fixed';
+        errorDiv.style.inset = '0';
+        errorDiv.style.background = '#2a0808';
+        errorDiv.style.color = '#ffcccc';
+        errorDiv.style.padding = '30px';
+        errorDiv.style.zIndex = '999999';
+        errorDiv.style.fontFamily = 'monospace';
+        errorDiv.style.overflow = 'auto';
+        errorDiv.innerHTML = '<h2>🚨 Global Unhandled Exception Caught:</h2>' +
+          '<p><strong>Message:</strong> ' + event.message + '</p>' +
+          '<p><strong>File:</strong> ' + event.filename + ':' + event.lineno + ':' + event.colno + '</p>' +
+          '<pre style="background: rgba(0,0,0,0.5); padding: 15px; border-radius: 8px; font-size: 13px;">' + (event.error ? event.error.stack : 'No stack trace available') + '</pre>';
+        document.body.appendChild(errorDiv);
+      });
+    </script>
   </head>
   <body>
     <div id="root"></div>

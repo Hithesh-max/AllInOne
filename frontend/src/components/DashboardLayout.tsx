@@ -3,6 +3,7 @@ import { Bell, Sun, Moon, Settings, Menu } from 'lucide-react';
 import { Sidebar } from './Sidebar';
 import type { ViewType } from './Sidebar';
 import { useTheme } from '../context/ThemeContext';
+import { ParticleBackground } from './ParticleBackground';
 
 interface DashboardLayoutProps {
   currentView: ViewType;
@@ -22,6 +23,7 @@ export const DashboardLayout: React.FC<DashboardLayoutProps> = ({ currentView, s
 
   return (
     <div className="flex h-screen w-screen overflow-hidden bg-dark-900 text-slate-100">
+      <ParticleBackground />
       {/* Sidebar Navigation */}
       <Sidebar currentView={currentView} setView={setView} />
 
@@ -89,7 +91,7 @@ export const DashboardLayout: React.FC<DashboardLayoutProps> = ({ currentView, s
         </header>
 
         {/* Content Wrapper */}
-        <main className="flex-1 overflow-y-auto p-8 relative">
+        <main className="flex-1 overflow-y-auto p-8 relative animate-slide-in-up" key={currentView}>
           {children}
         </main>
       </div>

@@ -19,15 +19,21 @@ export const Home: React.FC<HomeProps> = ({ setView, onSetQuickPrompt }) => {
   const [expenseTotal, setExpenseTotal] = useState(0);
   const [loading, setLoading] = useState(true);
 
+  // Animated Count-Up values state
+  const [displayCgpa, setDisplayCgpa] = useState(0);
+  const [displayApplications, setDisplayApplications] = useState(0);
+  const [displayEvents, setDisplayEvents] = useState(0);
+  const [displayExpenses, setDisplayExpenses] = useState(0);
+
   // Financial Graph Data
   const financialData = [
-    { name: 'Mon', expense: 12 },
-    { name: 'Tue', expense: 28 },
-    { name: 'Wed', expense: 8 },
-    { name: 'Thu', expense: 45 },
-    { name: 'Fri', expense: 20 },
-    { name: 'Sat', expense: 55 },
-    { name: 'Sun', expense: 15 },
+    { name: 'Mon', expense: 120 },
+    { name: 'Tue', expense: 280 },
+    { name: 'Wed', expense: 80 },
+    { name: 'Thu', expense: 450 },
+    { name: 'Fri', expense: 200 },
+    { name: 'Sat', expense: 550 },
+    { name: 'Sun', expense: 150 },
   ];
 
   useEffect(() => {
@@ -52,6 +58,34 @@ export const Home: React.FC<HomeProps> = ({ setView, onSetQuickPrompt }) => {
     fetchData();
   }, []);
 
+  // requestAnimationFrame value counting animation hook
+  useEffect(() => {
+    if (loading) return;
+
+    const animateValue = (start: number, end: number, duration: number, setValue: (val: number) => void) => {
+      if (start === end) {
+        setValue(end);
+        return;
+      }
+      let startTimestamp: number | null = null;
+      const step = (timestamp: number) => {
+        if (!startTimestamp) startTimestamp = timestamp;
+        const progress = Math.min((timestamp - startTimestamp) / duration, 1);
+        setValue(progress * (end - start) + start);
+        if (progress < 1) {
+          window.requestAnimationFrame(step);
+        }
+      };
+      window.requestAnimationFrame(step);
+    };
+
+    const targetCgpa = parseFloat(profile?.cgpa || '8.2');
+    animateValue(0, targetCgpa, 800, setDisplayCgpa);
+    animateValue(0, internshipCount, 800, setDisplayApplications);
+    animateValue(0, eventCount, 800, setDisplayEvents);
+    animateValue(0, expenseTotal, 800, setDisplayExpenses);
+  }, [loading, profile?.cgpa, internshipCount, eventCount, expenseTotal]);
+
   const prompts = [
     'I need opportunities next month.',
     'I have vacation in July.',
@@ -65,13 +99,13 @@ export const Home: React.FC<HomeProps> = ({ setView, onSetQuickPrompt }) => {
   };
 
   const agentsList = [
-    { name: 'Planner Agent', status: 'Standby / Listening', color: 'bg-brand-purple shadow-neon' },
-    { name: 'Internship Matcher', status: 'Ready', color: 'bg-green-500 shadow-green-500/50' },
-    { name: 'Hackathon Scraper', status: 'Ready', color: 'bg-green-500 shadow-green-500/50' },
-    { name: 'Scholarship Portal', status: 'Ready', color: 'bg-green-500 shadow-green-500/50' },
-    { name: 'ATS Optimizer', status: 'Ready', color: 'bg-green-500 shadow-green-500/50' },
-    { name: 'Study Scheduler', status: 'Ready', color: 'bg-green-500 shadow-green-500/50' },
-    { name: 'Financial Auditor', status: 'Ready', color: 'bg-green-500 shadow-green-500/50' },
+    { name: 'Planner Agent', status: 'Standby / Listening', color: 'bg-brand-purple' },
+    { name: 'Internship Matcher', status: 'Active Scan', color: 'bg-emerald-500' },
+    { name: 'Hackathon Scraper', status: 'Active Scan', color: 'bg-emerald-500' },
+    { name: 'Scholarship Portal', status: 'Active Scan', color: 'bg-emerald-500' },
+    { name: 'ATS Optimizer', status: 'Active Scan', color: 'bg-emerald-500' },
+    { name: 'Study Scheduler', status: 'Active Scan', color: 'bg-emerald-500' },
+    { name: 'Financial Auditor', status: 'Active Scan', color: 'bg-emerald-500' },
   ];
 
   return (
@@ -99,46 +133,46 @@ export const Home: React.FC<HomeProps> = ({ setView, onSetQuickPrompt }) => {
       {/* Metrics Row */}
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
         {/* CGPA */}
-        <div className="glass-card p-6 border border-white/5 flex items-center gap-4">
+        <div className="glass-card p-6 border border-white/5 flex items-center gap-4 hover:border-brand-violet/20 transition-all">
           <div className="h-11 w-11 rounded-xl bg-brand-violet/10 border border-brand-violet/20 flex items-center justify-center text-brand-neon">
             <GraduationCap className="h-5 w-5" />
           </div>
           <div>
             <span className="text-[10px] uppercase text-slate-400 tracking-wider font-bold">Academic GPA</span>
-            <p className="text-xl font-extrabold text-slate-200 mt-0.5">{profile?.cgpa || '0.0'} / 10</p>
+            <p className="text-xl font-extrabold text-slate-200 mt-0.5">{displayCgpa.toFixed(1)} / 10</p>
           </div>
         </div>
 
         {/* Applied Internships */}
-        <div className="glass-card p-6 border border-white/5 flex items-center gap-4">
+        <div className="glass-card p-6 border border-white/5 flex items-center gap-4 hover:border-brand-cyan/20 transition-all">
           <div className="h-11 w-11 rounded-xl bg-brand-cyan/10 border border-brand-cyan/20 flex items-center justify-center text-brand-cyan">
             <Briefcase className="h-5 w-5" />
           </div>
           <div>
             <span className="text-[10px] uppercase text-slate-400 tracking-wider font-bold">Applications</span>
-            <p className="text-xl font-extrabold text-slate-200 mt-0.5">{internshipCount} Active</p>
+            <p className="text-xl font-extrabold text-slate-200 mt-0.5">{Math.round(displayApplications)} Active</p>
           </div>
         </div>
 
         {/* Calendar Events */}
-        <div className="glass-card p-6 border border-white/5 flex items-center gap-4">
+        <div className="glass-card p-6 border border-white/5 flex items-center gap-4 hover:border-yellow-500/20 transition-all">
           <div className="h-11 w-11 rounded-xl bg-yellow-500/10 border border-yellow-500/20 flex items-center justify-center text-yellow-400">
             <Calendar className="h-5 w-5" />
           </div>
           <div>
             <span className="text-[10px] uppercase text-slate-400 tracking-wider font-bold">Calendar Tasks</span>
-            <p className="text-xl font-extrabold text-slate-200 mt-0.5">{eventCount} Events</p>
+            <p className="text-xl font-extrabold text-slate-200 mt-0.5">{Math.round(displayEvents)} Events</p>
           </div>
         </div>
 
         {/* Expenses */}
-        <div className="glass-card p-6 border border-white/5 flex items-center gap-4">
+        <div className="glass-card p-6 border border-white/5 flex items-center gap-4 hover:border-emerald-500/20 transition-all">
           <div className="h-11 w-11 rounded-xl bg-emerald-500/10 border border-emerald-500/20 flex items-center justify-center text-emerald-400">
             <Wallet className="h-5 w-5" />
           </div>
           <div>
             <span className="text-[10px] uppercase text-slate-400 tracking-wider font-bold">Total Expenses</span>
-            <p className="text-xl font-extrabold text-slate-200 mt-0.5">${expenseTotal.toFixed(2)}</p>
+            <p className="text-xl font-extrabold text-slate-200 mt-0.5">₹{displayExpenses.toFixed(2)}</p>
           </div>
         </div>
       </div>
@@ -208,7 +242,10 @@ export const Home: React.FC<HomeProps> = ({ setView, onSetQuickPrompt }) => {
                 {agentsList.map((agent, i) => (
                   <div key={i} className="flex items-center justify-between p-3 rounded-xl bg-white/5 border border-white/5">
                     <div className="flex items-center gap-3">
-                      <span className={`h-2.5 w-2.5 rounded-full ${agent.color}`} />
+                      <div className="relative h-2.5 w-2.5">
+                        <span className={`animate-ping absolute inline-flex h-full w-full rounded-full opacity-75 ${agent.color}`} />
+                        <span className={`relative inline-flex rounded-full h-2.5 w-2.5 ${agent.color}`} />
+                      </div>
                       <span className="text-xs font-semibold text-slate-300">{agent.name}</span>
                     </div>
                     <span className="text-[10px] text-slate-500 font-medium">{agent.status}</span>

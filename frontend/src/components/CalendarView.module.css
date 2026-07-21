@@ -1,0 +1,278 @@
+.calendarContainer {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+.calendarLayout {
+  display: grid;
+  grid-template-columns: 2.2fr 1fr;
+  gap: 1.5rem;
+}
+
+@media (max-width: 1024px) {
+  .calendarLayout {
+    grid-template-columns: 1fr;
+  }
+}
+
+.calendarMain {
+  padding: 1.5rem;
+}
+
+.calendarHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1.5rem;
+}
+
+.monthTitle {
+  font-size: 1.2rem;
+  font-weight: 700;
+  color: white;
+}
+
+.navControls {
+  display: flex;
+  gap: 0.5rem;
+}
+
+.navBtn {
+  width: 32px;
+  height: 32px;
+  border-radius: 8px;
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid var(--card-border);
+  color: #9ca3af;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.2s;
+}
+
+.navBtn:hover {
+  background: rgba(255, 255, 255, 0.08);
+  color: white;
+  border-color: rgba(255, 255, 255, 0.15);
+}
+
+.daysHeader {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  text-align: center;
+  font-size: 0.8rem;
+  font-weight: 600;
+  color: #6b7280;
+  margin-bottom: 0.5rem;
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  gap: 6px;
+}
+
+.dayCell {
+  aspect-ratio: 1.15;
+  background: rgba(255, 255, 255, 0.01);
+  border: 1px solid rgba(255, 255, 255, 0.03);
+  border-radius: 10px;
+  padding: 0.4rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  position: relative;
+  transition: all 0.2s;
+  min-height: 80px;
+}
+
+.dayCell:hover {
+  background: rgba(255, 255, 255, 0.03);
+  border-color: rgba(99, 102, 241, 0.2);
+}
+
+.dayCellEmpty {
+  opacity: 0.15;
+  pointer-events: none;
+}
+
+.dayNumber {
+  font-size: 0.8rem;
+  font-weight: 500;
+  color: #9ca3af;
+}
+
+.dayCellToday {
+  background: rgba(99, 102, 241, 0.08);
+  border: 1px solid rgba(99, 102, 241, 0.35);
+  box-shadow: 0 0 10px rgba(99, 102, 241, 0.1);
+}
+
+.dayCellToday .dayNumber {
+  color: white;
+  font-weight: 700;
+}
+
+.eventList {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  overflow: hidden;
+  margin-top: 0.25rem;
+}
+
+.eventBar {
+  font-size: 0.65rem;
+  padding: 1px 4px;
+  border-radius: 4px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  max-width: 100%;
+  font-weight: 500;
+  cursor: pointer;
+  transition: opacity 0.2s;
+}
+
+.eventBar:hover {
+  opacity: 0.85;
+}
+
+.eventBarHackathon {
+  background: rgba(99, 102, 241, 0.15);
+  color: #a5b4fc;
+  border-left: 2px solid var(--primary);
+}
+
+.eventBarInternship {
+  background: rgba(6, 182, 212, 0.15);
+  color: #67e8f9;
+  border-left: 2px solid var(--info);
+}
+
+.eventBarScholarship {
+  background: rgba(16, 185, 129, 0.15);
+  color: #6ee7b7;
+  border-left: 2px solid var(--success);
+}
+
+/* Sidebar Details */
+.calendarSidebar {
+  display: flex;
+  flex-direction: column;
+  gap: 1.25rem;
+}
+
+.sidebarCard {
+  padding: 1.25rem;
+}
+
+.sidebarTitle {
+  font-size: 1rem;
+  font-weight: 600;
+  color: white;
+  margin-bottom: 0.75rem;
+}
+
+.legendRow {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.legendItem {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-size: 0.8rem;
+  color: #9ca3af;
+}
+
+.legendColor {
+  width: 12px;
+  height: 12px;
+  border-radius: 4px;
+}
+
+.upcomingList {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+  max-height: 250px;
+  overflow-y: auto;
+}
+
+.upcomingItem {
+  display: flex;
+  gap: 0.75rem;
+  padding: 0.6rem;
+  border-radius: 8px;
+  background: rgba(255, 255, 255, 0.02);
+  border: 1px solid rgba(255, 255, 255, 0.04);
+}
+
+.upcomingDateBadge {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  width: 44px;
+  height: 44px;
+  border-radius: 8px;
+  background: rgba(255, 255, 255, 0.04);
+  flex-shrink: 0;
+}
+
+.upcomingMonth {
+  font-size: 0.6rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  color: #9ca3af;
+}
+
+.upcomingDay {
+  font-size: 0.95rem;
+  font-weight: 700;
+  color: white;
+}
+
+.upcomingDetails {
+  display: flex;
+  flex-direction: column;
+  gap: 0.15rem;
+  overflow: hidden;
+}
+
+.upcomingName {
+  font-size: 0.8rem;
+  font-weight: 600;
+  color: white;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.upcomingDesc {
+  font-size: 0.7rem;
+  color: #6b7280;
+}
+
+.syncContainer {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+.syncStatus {
+  font-size: 0.75rem;
+  color: var(--success);
+  display: flex;
+  align-items: center;
+  gap: 0.35rem;
+  padding: 0.5rem;
+  border-radius: 8px;
+  background: rgba(16, 185, 129, 0.05);
+  border: 1px solid rgba(16, 185, 129, 0.1);
+}

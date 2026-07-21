@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
-import { Calendar, Plus, Clock, Tag } from 'lucide-react';
+import { Calendar, Plus, Clock } from 'lucide-react';
+import CalendarView from '../components/CalendarView';
+import { initialContests } from '../data';
 
 interface CalendarEvent {
   id: number;
@@ -13,6 +15,10 @@ interface CalendarEvent {
 
 export const CalendarPage: React.FC = () => {
   const [events, setEvents] = useState<CalendarEvent[]>([]);
+  const [internships, setInternships] = useState([]);
+  const [hackathons, setHackathons] = useState([]);
+  const [scholarships, setScholarships] = useState([]);
+
   const [title, setTitle] = useState('');
   const [description, setDescription] = useState('');
   const [startTime, setStartTime] = useState('');
@@ -28,8 +34,24 @@ export const CalendarPage: React.FC = () => {
     }
   };
 
+  const fetchAllOpportunities = async () => {
+    try {
+      const [intRes, hackRes, scholRes] = await Promise.all([
+        axios.get('/api/internships'),
+        axios.get('/api/hackathons'),
+        axios.get('/api/scholarships')
+      ]);
+      setInternships(intRes.data);
+      setHackathons(hackRes.data);
+      setScholarships(scholRes.data);
+    } catch (err) {
+      console.error("Failed to load calendar dependencies", err);
+    }
+  };
+
   useEffect(() => {
     fetchEvents();
+    fetchAllOpportunities();
   }, []);
 
   const handleSubmit = async (e: React.FormEvent) => {
@@ -49,6 +71,7 @@ export const CalendarPage: React.FC = () => {
       setStartTime('');
       setEndTime('');
       fetchEvents();
+      fetchAllOpportunities();
     } catch (err) {
       console.error(err);
     }
@@ -72,9 +95,20 @@ export const CalendarPage: React.FC = () => {
         <p className="text-xs text-slate-400 mt-1">Check scheduled exams, interviews, travel bookings, and study review hours</p>
       </div>
 
+      {/* Month Calendar Grid */}
+      <div className="glass-card p-6 border border-white/5">
+        <CalendarView
+          internships={internships}
+          hackathons={hackathons}
+          scholarships={scholarships}
+          contests={initialContests}
+        />
+      </div>
+
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
         {/* Events list */}
         <div className="lg:col-span-2 space-y-4">
+          <h3 className="font-bold text-slate-200 text-sm pl-1">Agenda Reminders List</h3>
           {events.map(event => (
             <div key={event.id} className="glass-card p-6 border border-white/5 flex gap-4 hover:border-brand-violet/20 transition-all justify-between items-start">
               <div className="space-y-1.5">

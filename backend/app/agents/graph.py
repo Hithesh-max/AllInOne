@@ -8,9 +8,7 @@ from app.agents.specialized.agents import (
     resume_agent_node,
     study_agent_node,
     finance_agent_node,
-    shopping_agent_node,
-    health_agent_node,
-    travel_agent_node
+    shopping_agent_node
 )
 
 # Initialize workflow
@@ -28,8 +26,6 @@ workflow.add_node("resume_agent", resume_agent_node)
 workflow.add_node("study_agent", study_agent_node)
 workflow.add_node("finance_agent", finance_agent_node)
 workflow.add_node("shopping_agent", shopping_agent_node)
-workflow.add_node("health_agent", health_agent_node)
-workflow.add_node("travel_agent", travel_agent_node)
 
 # Checkpoint node to redirect states in the loop
 def checkpoint_fn(state: AgentState) -> AgentState:
@@ -59,8 +55,6 @@ routing_map = {
     "study_agent": "study_agent",
     "finance_agent": "finance_agent",
     "shopping_agent": "shopping_agent",
-    "health_agent": "health_agent",
-    "travel_agent": "travel_agent",
     "response": "response"
 }
 
@@ -85,7 +79,7 @@ workflow.add_edge("response", END)
 app_graph = workflow.compile()
 
 
-def run_agentic_workflow(user_id: int, session_id: str, query: str, profile_dict: dict, chat_history: list) -> dict:
+def run_agentic_workflow(user_id: int, session_id: str, query: str, profile_dict: dict, chat_history: list, semantic_memories: list = None) -> dict:
     """
     Executes the compiled LangGraph workflow.
     """
@@ -95,6 +89,7 @@ def run_agentic_workflow(user_id: int, session_id: str, query: str, profile_dict
         session_id=session_id,
         profile=profile_dict,
         history=chat_history,
+        semantic_memories=semantic_memories or [],
         suggested_agents=[],
         active_agents=[],
         agent_responses={},

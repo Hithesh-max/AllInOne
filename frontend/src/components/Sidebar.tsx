@@ -2,14 +2,15 @@ import React from 'react';
 import { 
   LayoutDashboard, MessageSquare, BookOpen, Briefcase, Award, 
   GraduationCap, FileText, Wallet, ShoppingCart, Heart, 
-  Compass, Calendar, Settings, User, LogOut, Terminal
+  Compass, Calendar, User, LogOut, Terminal, Globe
 } from 'lucide-react';
 import { useAuth } from '../context/AuthContext';
+import { useMode } from '../context/ModeContext';
 
 export type ViewType = 
   | 'home' | 'chat' | 'study' | 'internships' | 'hackathons' 
-  | 'scholarships' | 'resume' | 'finance' | 'shopping' 
-  | 'health' | 'travel' | 'calendar' | 'settings' | 'profile';
+  | 'scholarships' | 'contests' | 'resume' | 'finance' | 'shopping' 
+  | 'calendar' | 'settings' | 'profile' | 'news';
 
 interface SidebarProps {
   currentView: ViewType;
@@ -18,6 +19,7 @@ interface SidebarProps {
 
 export const Sidebar: React.FC<SidebarProps> = ({ currentView, setView }) => {
   const { logout, user } = useAuth();
+  const { mode, setMode } = useMode();
 
   const menuItems = [
     { id: 'home', label: 'Dashboard', icon: LayoutDashboard },
@@ -26,20 +28,49 @@ export const Sidebar: React.FC<SidebarProps> = ({ currentView, setView }) => {
     { id: 'internships', label: 'Internships', icon: Briefcase },
     { id: 'hackathons', label: 'Hackathons', icon: Award },
     { id: 'scholarships', label: 'Scholarships', icon: GraduationCap },
+    { id: 'contests', label: 'Coding Contests', icon: Terminal },
     { id: 'resume', label: 'ATS Resume Review', icon: FileText },
     { id: 'finance', label: 'Finance Tracker', icon: Wallet },
     { id: 'shopping', label: 'Smart Shopping', icon: ShoppingCart },
-    { id: 'health', label: 'Health Hub', icon: Heart },
-    { id: 'travel', label: 'Travel Planner', icon: Compass },
     { id: 'calendar', label: 'Calendar Events', icon: Calendar },
+    { id: 'news', label: 'Tech News Hub', icon: Globe },
     { id: 'profile', label: 'User Profile', icon: User },
   ];
+
+  // Dynamic safety redirect for both switch directions
+  React.useEffect(() => {
+    if (mode === 'productivity' && ['finance', 'shopping'].includes(currentView)) {
+      setView('home');
+    } else if (mode === 'tracker' && ['study', 'internships', 'hackathons', 'scholarships', 'contests', 'resume'].includes(currentView)) {
+      setView('home');
+    }
+  }, [mode, currentView, setView]);
+
+  const filteredMenuItems = menuItems.filter(item => {
+    // Basic items visible in both panes
+    if (['home', 'chat', 'calendar', 'profile'].includes(item.id)) {
+      return true;
+    }
+    // Tech News visible only in productivity mode (removed from tracker)
+    if (item.id === 'news') {
+      return mode === 'productivity';
+    }
+    // Productivity exclusive items
+    if (['study', 'internships', 'hackathons', 'scholarships', 'contests', 'resume'].includes(item.id)) {
+      return mode === 'productivity';
+    }
+    // Tracker exclusive items
+    if (['finance', 'shopping'].includes(item.id)) {
+      return mode === 'tracker';
+    }
+    return true;
+  });
 
   return (
     <aside className="w-64 h-screen glass-card rounded-none border-r border-y-0 border-l-0 border-white/5 flex flex-col justify-between py-6">
       <div>
         {/* App Logo */}
-        <div className="flex items-center gap-3 px-6 mb-8 cursor-pointer" onClick={() => setView('home')}>
+        <div className="flex items-center gap-3 px-6 mb-6 cursor-pointer" onClick={() => setView('home')}>
           <div className="h-10 w-10 rounded-xl bg-gradient-to-tr from-brand-violet to-brand-cyan flex items-center justify-center shadow-neon">
             <Terminal className="h-5 w-5 text-white" />
           </div>
@@ -49,8 +80,36 @@ export const Sidebar: React.FC<SidebarProps> = ({ currentView, setView }) => {
           </div>
         </div>
 
+        {/* WORKSPACE MODE TOGGLE SWITCH */}
+        <div className="mx-4 mb-5 p-3 rounded-xl bg-white/5 border border-white/5 flex items-center justify-between">
+          <div className="flex items-center gap-2">
+            {mode === 'productivity' ? (
+              <Briefcase className="h-4 w-4 text-brand-violet animate-pulse shrink-0" />
+            ) : (
+              <Wallet className="h-4 w-4 text-brand-cyan animate-pulse shrink-0" />
+            )}
+            <span className="text-[9px] font-extrabold uppercase tracking-wider text-slate-200">
+              {mode === 'productivity' ? 'Productivity' : 'Tracker'}
+            </span>
+          </div>
+          
+          <button
+            type="button"
+            onClick={() => setMode(mode === 'productivity' ? 'tracker' : 'productivity')}
+            className={`w-9 h-5 rounded-full p-0.5 transition-colors duration-300 relative focus:outline-none ${
+              mode === 'tracker' ? 'bg-brand-cyan shadow-cyan' : 'bg-brand-violet shadow-neon'
+            }`}
+          >
+            <div
+              className={`w-4 h-4 rounded-full bg-white shadow-md transform transition-transform duration-300 ${
+                mode === 'tracker' ? 'translate-x-4' : 'translate-x-0'
+              }`}
+            />
+          </button>
+        </div>
+
         {/* User Info Capsule */}
-        <div className="mx-4 mb-6 p-3 rounded-xl bg-white/5 border border-white/5 flex items-center gap-3">
+        <div className="mx-4 mb-5 p-3 rounded-xl bg-white/5 border border-white/5 flex items-center gap-3">
           <div className="h-8 w-8 rounded-full bg-brand-violet/20 border border-brand-violet/40 flex items-center justify-center font-bold text-brand-neon">
             {user?.full_name?.charAt(0).toUpperCase() || 'S'}
           </div>
@@ -61,8 +120,8 @@ export const Sidebar: React.FC<SidebarProps> = ({ currentView, setView }) => {
         </div>
 
         {/* Navigation Items */}
-        <nav className="px-3 space-y-1 overflow-y-auto max-h-[60vh] pr-1">
-          {menuItems.map(item => {
+        <nav className="px-3 space-y-1 overflow-y-auto max-h-[50vh] pr-1">
+          {filteredMenuItems.map(item => {
             const Icon = item.icon;
             const isActive = currentView === item.id;
             return (

@@ -6,6 +6,7 @@ class AgentState(TypedDict):
     session_id: str
     profile: Dict[str, Any]
     history: List[Dict[str, str]]
+    semantic_memories: List[str]
     suggested_agents: List[str]
     active_agents: List[str]
     agent_responses: Dict[str, Any]

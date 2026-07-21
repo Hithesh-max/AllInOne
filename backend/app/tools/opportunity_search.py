@@ -9,53 +9,47 @@ TAVILY_API_KEY = os.getenv("TAVILY_API_KEY", "")
 MOCK_INTERNSHIPS = [
     {
         "company": "Google",
-        "role": "Software Engineering Intern",
+        "role": "STEP Intern (Software Engineering)",
         "skills": ["Python", "C++", "Java", "Data Structures"],
         "cgpa_req": 8.0,
         "source": "Google Careers",
         "url": "https://careers.google.com",
-        "description": "Looking for students in Computer Science. Work on core infrastructure and features.",
-        "deadline": "2026-08-15"
+        "description": "A 12-week developmental internship for second-year CS undergraduate students.",
+        "deadline": "2026-07-02",
+        "match_score": 92,
+        "timeline": [
+            { "stageName": "Resume Screen", "status": "Completed", "details": "Shortlisted for OA" },
+            { "stageName": "Online Assessment", "status": "Pending", "deadline": "2026-06-29T23:59:59Z", "daysLeft": 2, "details": "2 Coding questions on DSA" }
+        ]
+    },
+    {
+        "company": "Amazon",
+        "role": "SDE Intern",
+        "skills": ["Java", "C++", "AWS", "SQL"],
+        "cgpa_req": 7.5,
+        "source": "Amazon Jobs",
+        "url": "https://amazon.jobs",
+        "description": "Tackle real-world software problems, database optimization, and cloud deployments.",
+        "deadline": "2026-07-09",
+        "match_score": 85,
+        "timeline": [
+            { "stageName": "Application Submitted", "status": "Completed", "details": "Successfully logged" },
+            { "stageName": "OA Round 1", "status": "Pending", "deadline": "2026-07-09T23:59:59Z", "daysLeft": 7, "details": "Debugging and coding test" }
+        ]
     },
     {
         "company": "Meta",
         "role": "Frontend Developer Intern",
         "skills": ["React", "TypeScript", "JavaScript", "HTML/CSS"],
         "cgpa_req": 7.5,
-        "source": "Indeed",
-        "url": "https://indeed.com",
+        "source": "Meta Careers",
+        "url": "https://careers.meta.com",
         "description": "Work with React and Framer Motion to build stunning user interfaces.",
-        "deadline": "2026-08-20"
-    },
-    {
-        "company": "OpenAI",
-        "role": "Data Science & AI Intern",
-        "skills": ["Python", "PyTorch", "SQL", "Machine Learning"],
-        "cgpa_req": 8.5,
-        "source": "Wellfound",
-        "url": "https://wellfound.com",
-        "description": "Research and build evaluation suites for next-generation generative AI systems.",
-        "deadline": "2026-09-01"
-    },
-    {
-        "company": "Stripe",
-        "role": "Backend Engineer Intern",
-        "skills": ["Ruby", "Python", "Go", "APIs", "SQL"],
-        "cgpa_req": 7.0,
-        "source": "LinkedIn",
-        "url": "https://linkedin.com",
-        "description": "Help construct secure and scalable financial infrastructure APIs.",
-        "deadline": "2026-08-10"
-    },
-    {
-        "company": "Flipkart",
-        "role": "Mobile App Developer",
-        "skills": ["Flutter", "React Native", "Swift", "Kotlin"],
-        "cgpa_req": 7.0,
-        "source": "Internshala",
-        "url": "https://internshala.com",
-        "description": "Implement fluid mobile applications for e-commerce platforms.",
-        "deadline": "2026-07-28"
+        "deadline": "2026-08-20",
+        "match_score": 78,
+        "timeline": [
+            { "stageName": "Resume Review", "status": "Pending", "deadline": "2026-08-20T23:59:59Z", "daysLeft": 45, "details": "Portfolio and Github assessment" }
+        ]
     }
 ]
 
@@ -67,7 +61,10 @@ MOCK_HACKATHONS = [
         "source": "Smart India Hackathon Portal",
         "url": "https://sih.gov.in",
         "domain": "Smart City, Health, Agriculture, Education",
-        "deadline": "2026-10-30"
+        "deadline": "2026-10-30",
+        "timeline": [
+            { "stageName": "Internal College Nomination", "status": "Pending", "deadline": "2026-10-15T23:59:59Z", "daysLeft": 100, "details": "Scored top 5 in college internal round" }
+        ]
     },
     {
         "name": "EthIndia 2026",
@@ -76,34 +73,24 @@ MOCK_HACKATHONS = [
         "source": "Devfolio",
         "url": "https://devfolio.co",
         "domain": "Web3, Blockchain, Ethereum, Security",
-        "deadline": "2026-11-01"
+        "deadline": "2026-11-01",
+        "timeline": [
+            { "stageName": "Devfolio Application", "status": "Completed", "details": "Github synced" },
+            { "stageName": "Confirmation Ticket", "status": "Pending", "deadline": "2026-11-01T23:59:59Z", "daysLeft": 115, "details": "Waiting for staking window" }
+        ]
     },
     {
-        "name": "MLH Global AI Hackathon",
-        "dates": "July 17-19, 2026",
+        "name": "AngelHack Global Hackathon Series",
+        "dates": "July 18-19, 2026",
         "eligibility": "Open to students worldwide",
-        "source": "Major League Hacking (MLH)",
-        "url": "https://mlh.io",
-        "domain": "Artificial Intelligence, LLMs, Computer Vision",
-        "deadline": "2026-07-15"
-    },
-    {
-        "name": "Devpost AI Agents Hackathon",
-        "dates": "August 5-10, 2026",
-        "eligibility": "Students & Professionals",
-        "source": "Devpost",
-        "url": "https://devpost.com",
-        "domain": "Agentic Workflows, LangGraph, LLMs",
-        "deadline": "2026-08-01"
-    },
-    {
-        "name": "Hack2Skill Coding Showdown",
-        "dates": "September 12-13, 2026",
-        "eligibility": "Engineering branches, CSE/IT preferred",
-        "source": "Hack2Skill",
-        "url": "https://hack2skill.com",
-        "domain": "Competitive Programming, Web Dev",
-        "deadline": "2026-09-05"
+        "source": "AngelHack Portal",
+        "url": "https://angelhack.com",
+        "domain": "FinTech, Mobility, AI",
+        "deadline": "2026-07-08",
+        "timeline": [
+            { "stageName": "Form Team", "status": "Completed", "details": "Formed 3-person dev squad" },
+            { "stageName": "Aptitude pitch check", "status": "Pending", "deadline": "2026-07-08T23:59:59Z", "daysLeft": 7, "details": "Submit 1-pager proposal idea" }
+        ]
     }
 ]
 
@@ -114,39 +101,22 @@ MOCK_SCHOLARSHIPS = [
         "amount": "INR 50,000 per year",
         "source": "National Scholarship Portal",
         "url": "https://scholarships.gov.in",
-        "deadline": "2026-10-15"
+        "deadline": "2026-08-30",
+        "timeline": [
+            { "stageName": "Institute Verification", "status": "Pending", "deadline": "2026-08-15T23:59:59Z", "daysLeft": 40, "details": "Lodge transcripts with college nodals" }
+        ]
     },
     {
-        "name": "Buddy4Study Reliance Foundation Undergraduate Scholarship",
-        "criteria": "CGPA > 6.0, Any branch, Annual Income < 15 LPA",
+        "name": "Reliance Foundation Undergraduate Scholarship",
+        "criteria": "CGPA > 6.0, Any branch, Annual Income < 8 LPA",
         "amount": "Up to INR 2,00,000",
         "source": "Buddy4Study",
         "url": "https://buddy4study.com",
-        "deadline": "2026-09-30"
-    },
-    {
-        "name": "Adobe Women-in-Technology Scholarship",
-        "criteria": "Female students in CSE/IT, CGPA > 8.0",
-        "amount": "USD 20,000 + Internship opportunity",
-        "source": "Adobe Careers",
-        "url": "https://adobe.com",
-        "deadline": "2026-09-10"
-    },
-    {
-        "name": "Government Post-Matric Scholarship",
-        "criteria": "Annual Family Income < 2.0 LPA",
-        "amount": "Full Tuition Fee Waiver",
-        "source": "Government Education Portal",
-        "url": "https://education.gov.in",
-        "deadline": "2026-11-15"
-    },
-    {
-        "name": "College Alumni Merit Scholarship",
-        "criteria": "Top 5% of class, CGPA > 9.0",
-        "amount": "INR 30,000",
-        "source": "College Scholarship Cell",
-        "url": "https://college.edu",
-        "deadline": "2026-08-31"
+        "deadline": "2026-07-04",
+        "timeline": [
+            { "stageName": "Application & Docs Verified", "status": "Completed", "details": "All academic certificates validated" },
+            { "stageName": "Interview Round", "status": "Pending", "deadline": "2026-07-04T23:59:59Z", "daysLeft": 3, "details": "Personal interview with foundation board" }
+        ]
     }
 ]
 
@@ -182,7 +152,9 @@ def search_web_tavily(query: str) -> List[Dict[str, Any]]:
 
 def get_internships(query: str = "") -> List[Dict[str, Any]]:
     """Search internships combining web results and local mock database"""
-    tavily_results = search_web_tavily(f"internships {query}")
+    # Steer the query to pull from company portals, government sites, startup pages, and open-source programs
+    search_query = f"{query} internship (Google Careers, Microsoft, Amazon, NVIDIA, Adobe, AICTE, DRDO, ISRO, BARC, GSoC, Internshala, Wellfound, Remotive)"
+    tavily_results = search_web_tavily(search_query)
     if tavily_results:
         # Mix the web results with the mock database
         formatted_tavily = []
@@ -214,7 +186,9 @@ def get_internships(query: str = "") -> List[Dict[str, Any]]:
 
 def get_hackathons(query: str = "") -> List[Dict[str, Any]]:
     """Search hackathons combining web results and local mock database"""
-    tavily_results = search_web_tavily(f"hackathons {query}")
+    # Steer the query to scrape/aggregate from Devpost, Unstop, HackerEarth, and MLH
+    search_query = f"{query} hackathon (Devpost, Unstop, HackerEarth, MLH)"
+    tavily_results = search_web_tavily(search_query)
     if tavily_results:
         formatted_tavily = []
         for res in tavily_results:
@@ -242,7 +216,9 @@ def get_hackathons(query: str = "") -> List[Dict[str, Any]]:
 
 def get_scholarships(query: str = "") -> List[Dict[str, Any]]:
     """Search scholarships combining web results and local mock database"""
-    tavily_results = search_web_tavily(f"scholarships {query}")
+    # Steer the query to pull from NSP, AICTE, Buddy4Study, and State Gov portals
+    search_query = f"{query} scholarship (National Scholarship Portal India, AICTE, Buddy4Study, State Government portal)"
+    tavily_results = search_web_tavily(search_query)
     if tavily_results:
         formatted_tavily = []
         for res in tavily_results:

@@ -39,15 +39,29 @@ class LocalVectorStore:
                 "metadata": meta
             })
 
-    def similarity_search(self, query: str, k: int = 3) -> List[Dict[str, Any]]:
-        if not self.documents:
+    def similarity_search(self, query: str, k: int = 3, metadata_filter: Dict[str, Any] = None) -> List[Dict[str, Any]]:
+        # Pre-filter documents by metadata if filter is provided
+        docs = self.documents
+        if metadata_filter:
+            docs = []
+            for doc in self.documents:
+                meta = doc.get("metadata", {})
+                match = True
+                for fk, fv in metadata_filter.items():
+                    if meta.get(fk) != fv:
+                        match = False
+                        break
+                if match:
+                    docs.append(doc)
+
+        if not docs:
             return []
         
         query_tokens = self._tokenize(query)
         if not query_tokens:
-            return self.documents[:k]
+            return docs[:k]
             
-        doc_tokens_list = [self._tokenize(doc["text"]) for doc in self.documents]
+        doc_tokens_list = [self._tokenize(doc["text"]) for doc in docs]
         vocabulary = set(query_tokens)
         for doc_tokens in doc_tokens_list:
             vocabulary.update(doc_tokens)
@@ -60,7 +74,7 @@ class LocalVectorStore:
         query_norm = math.sqrt(sum(v * v for v in query_vector.values()))
         
         scores = []
-        for idx, doc in enumerate(self.documents):
+        for idx, doc in enumerate(docs):
             doc_tf = self._compute_tf(doc_tokens_list[idx])
             doc_vector = {term: doc_tf.get(term, 0.0) * idf[term] for term in vocabulary}
             doc_norm = math.sqrt(sum(v * v for v in doc_vector.values()))
@@ -144,14 +158,17 @@ def add_to_vector_memory(user_id: int, conversation_id: str, query: str, respons
     )
 
 
-def search_vector_memory(user_id: int, query: str, limit: int = 3) -> List[str]:
+def search_vector_memory(user_id: int, query: str, limit: int = 3, filename: Optional[str] = None) -> List[str]:
     """
     Searches semantic vector memory for relevant past discussions.
+    If filename is provided, we restrict search to chunks of that document!
     """
-    results = vector_memory.similarity_search(query, k=limit)
-    # Filter by user_id
-    filtered = [doc["text"] for doc in results if doc["metadata"].get("user_id") == user_id]
-    return filtered
+    metadata_filter = {"user_id": user_id}
+    if filename:
+        metadata_filter["filename"] = filename
+        
+    results = vector_memory.similarity_search(query, k=limit, metadata_filter=metadata_filter)
+    return [doc["text"] for doc in results]
 
 
 # Inline datetime import for vector store timestamping

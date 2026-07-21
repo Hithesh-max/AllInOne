@@ -55,6 +55,7 @@ class InternshipApplication(Base):
     deadline = Column(Date, nullable=True)
     match_score = Column(Integer, nullable=True)
     notes = Column(Text, nullable=True)
+    timeline = Column(JSON, nullable=True, default=list)
 
     user = relationship("User", back_populates="internships")
 
@@ -69,6 +70,7 @@ class HackathonRegistration(Base):
     status = Column(String, default="Registered")  # Registered, In Progress, Submitted, Ended, Bookmarked
     team_status = Column(String, nullable=True)  # Solo, Team Formed, Looking for Team
     notes = Column(Text, nullable=True)
+    timeline = Column(JSON, nullable=True, default=list)
 
     user = relationship("User", back_populates="hackathons")
 
@@ -83,6 +85,7 @@ class ScholarshipApplication(Base):
     status = Column(String, default="Applied")  # Draft, Applied, Awarded, Rejected, Bookmarked
     deadline = Column(Date, nullable=True)
     notes = Column(Text, nullable=True)
+    timeline = Column(JSON, nullable=True, default=list)
 
     user = relationship("User", back_populates="scholarships")
 

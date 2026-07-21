@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { useAuth } from '../context/AuthContext';
 import { Terminal, KeyRound, Mail, User, ShieldAlert } from 'lucide-react';
 
-export const Auth: React.FC = () => {
+export const Auth: React.FC<{ onBackToLanding?: () => void }> = ({ onBackToLanding }) => {
   const { login, signup } = useAuth();
   const [isLogin, setIsLogin] = useState(true);
   const [email, setEmail] = useState('');
@@ -135,6 +135,16 @@ export const Auth: React.FC = () => {
             )}
           </button>
         </form>
+
+        {onBackToLanding && (
+          <button
+            type="button"
+            onClick={onBackToLanding}
+            className="w-full text-center text-xs text-slate-400 hover:text-slate-200 transition-colors mt-5 flex items-center justify-center gap-1.5 focus:outline-none"
+          >
+            ← Return to Landing Page
+          </button>
+        )}
       </div>
     </div>
   );

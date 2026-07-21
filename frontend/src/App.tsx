@@ -12,11 +12,11 @@ import { Resume } from './pages/Resume';
 import { StudyPlanner } from './pages/StudyPlanner';
 import { Finance } from './pages/Finance';
 import { Shopping } from './pages/Shopping';
-import { Health } from './pages/Health';
-import { Travel } from './pages/Travel';
 import { CalendarPage } from './pages/CalendarPage';
 import { Profile } from './pages/Profile';
 import { Settings } from './pages/Settings';
+import { Contests } from './pages/Contests';
+import { News } from './pages/News';
 import type { ViewType } from './components/Sidebar';
 
 export const App: React.FC = () => {
@@ -33,14 +33,6 @@ export const App: React.FC = () => {
     );
   }
 
-  // Show landing page to guest users
-  if (!token) {
-    if (showLanding) {
-      return <Landing onGetStarted={() => setShowLanding(false)} />;
-    }
-    return <Auth />;
-  }
-
   const renderActiveView = () => {
     switch (view) {
       case 'home':
@@ -53,6 +45,8 @@ export const App: React.FC = () => {
         return <Hackathons />;
       case 'scholarships':
         return <Scholarships />;
+      case 'contests':
+        return <Contests />;
       case 'resume':
         return <Resume />;
       case 'study':
@@ -61,25 +55,38 @@ export const App: React.FC = () => {
         return <Finance />;
       case 'shopping':
         return <Shopping />;
-      case 'health':
-        return <Health />;
-      case 'travel':
-        return <Travel />;
       case 'calendar':
         return <CalendarPage />;
       case 'profile':
         return <Profile />;
       case 'settings':
         return <Settings />;
+      case 'news':
+        return <News />;
       default:
         return <Home setView={setView} onSetQuickPrompt={setQuickPrompt} />;
     }
   };
 
+  const renderContent = () => {
+    if (!token) {
+      if (showLanding) {
+        return <Landing onGetStarted={() => setShowLanding(false)} />;
+      }
+      return <Auth onBackToLanding={() => setShowLanding(true)} />;
+    }
+
+    return (
+      <DashboardLayout currentView={view} setView={setView}>
+        {renderActiveView()}
+      </DashboardLayout>
+    );
+  };
+
   return (
-    <DashboardLayout currentView={view} setView={setView}>
-      {renderActiveView()}
-    </DashboardLayout>
+    <>
+      {renderContent()}
+    </>
   );
 };
 
