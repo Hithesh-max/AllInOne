@@ -80,26 +80,31 @@ export const Internships: React.FC = () => {
       const dbList = res.data;
       setAppliedList(dbList);
       
-      // Load and set the mock list
-      const parsedMockList = initialInternships.map(i => ({
-        ...i,
+      const discoverRes = await axios.get('/api/discover/internships');
+      const apiDiscoverList = discoverRes.data.map((i: any) => ({
+        id: i.id.toString(),
+        company: i.company,
+        role: i.role,
+        platform: "LinkedIn / Web",
+        description: i.description,
+        fee: 0,
+        teamSize: "Solo",
+        registeredCount: 0,
+        locationText: i.location || "Remote",
+        aboutText: i.description,
+        stipend: i.stipend || "Competitive",
+        stipendValue: 0,
+        location: i.location || "Remote",
+        field: "Software",
+        deadline: i.deadline || "Rolling",
         isApplied: dbList.some((item: any) => item.role === i.role && item.company === i.company),
-        timeline: i.timeline || [
-          { 
-            stageName: "Application Submission", 
-            status: "Pending", 
-            details: "Submit your resume and details on the company careers portal. Once complete, click 'Mark Stage as Completed' below.",
-            fileNameRequired: "resume_submitted.pdf"
-          },
-          { 
-            stageName: "OA / Interview Stages", 
-            status: "Pending", 
-            deadline: i.deadline, 
-            details: "Complete Online Assessment requests and prepare for core DSA rounds." 
-          }
+        url: i.url || "",
+        timeline: [
+          { stageName: "Application Submission", status: "Pending", details: "Submit your resume on the platform." },
+          { stageName: "OA / Interview Stages", status: "Pending", deadline: i.deadline, details: "Prepare for core DSA rounds." }
         ]
       }));
-      setDiscoverList(parsedMockList as any);
+      setDiscoverList(apiDiscoverList as any);
       setLoading(false);
     };
     init();

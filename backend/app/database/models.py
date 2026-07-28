@@ -169,3 +169,59 @@ class ChatMessage(Base):
     timestamp = Column(DateTime, default=datetime.datetime.utcnow)
 
     user = relationship("User", back_populates="chat_messages")
+
+
+# === GLOBAL SCRAPED DATA MODELS ===
+
+class GlobalHackathon(Base):
+    __tablename__ = "global_hackathons"
+
+    id = Column(Integer, primary_key=True, index=True)
+    title = Column(String, nullable=False)
+    host = Column(String, nullable=True)
+    platform = Column(String, nullable=True)
+    description = Column(Text, nullable=True)
+    registration_deadline = Column(String, nullable=True)
+    date = Column(String, nullable=True)
+    url = Column(String, nullable=True)
+    tags = Column(JSON, nullable=True, default=list)
+    mode = Column(String, nullable=True)
+    scale = Column(String, nullable=True)
+    created_at = Column(DateTime, default=datetime.datetime.utcnow)
+
+class GlobalInternship(Base):
+    __tablename__ = "global_internships"
+
+    id = Column(Integer, primary_key=True, index=True)
+    company = Column(String, nullable=False)
+    role = Column(String, nullable=False)
+    location = Column(String, nullable=True)
+    stipend = Column(String, nullable=True)
+    deadline = Column(String, nullable=True)
+    description = Column(Text, nullable=True)
+    url = Column(String, nullable=True)
+    created_at = Column(DateTime, default=datetime.datetime.utcnow)
+
+class GlobalScholarship(Base):
+    __tablename__ = "global_scholarships"
+
+    id = Column(Integer, primary_key=True, index=True)
+    name = Column(String, nullable=False)
+    provider = Column(String, nullable=True)
+    amount = Column(String, nullable=True)
+    deadline = Column(String, nullable=True)
+    url = Column(String, nullable=True)
+    description = Column(Text, nullable=True)
+    created_at = Column(DateTime, default=datetime.datetime.utcnow)
+
+class GlobalContest(Base):
+    __tablename__ = "global_contests"
+
+    id = Column(Integer, primary_key=True, index=True)
+    title = Column(String, nullable=False)
+    platform = Column(String, nullable=True)
+    date = Column(String, nullable=True)
+    time = Column(String, nullable=True)
+    duration = Column(String, nullable=True)
+    url = Column(String, nullable=True)
+    created_at = Column(DateTime, default=datetime.datetime.utcnow)

@@ -81,25 +81,33 @@ export const Hackathons: React.FC = () => {
       const dbList = res.data;
       setAppliedList(dbList);
       
-      const parsedMockList = initialHackathons.map(h => ({
-        ...h,
+      const discoverRes = await axios.get('/api/discover/hackathons');
+      const apiDiscoverList = discoverRes.data.map((h: any) => ({
+        id: h.id.toString(),
+        title: h.title,
+        host: h.host,
+        platform: h.platform,
+        description: h.description,
+        fee: 0,
+        teamSize: "Any",
+        registeredCount: 0,
+        locationText: h.mode || "Online",
+        aboutText: h.description,
+        tracks: [],
+        benefits: [],
         isApplied: dbList.some((item: any) => item.name === h.title),
-        timeline: h.timeline || [
-          { 
-            stageName: "Registration & Fee Payment", 
-            status: "Pending", 
-            details: `Complete registration and pay the ${h.fee === 0 ? 'Free' : `₹${h.fee}`} fee on Unstop/Portal. Once complete, click 'Mark Stage as Completed' below.` 
-          },
-          { 
-            stageName: "Idea PPT Submission", 
-            status: "Pending", 
-            deadline: h.registrationDeadline, 
-            details: "Submit your solution pitch deck or source repository link.",
-            fileNameRequired: "proposal_deck.pdf"
-          }
+        tags: h.tags || [],
+        mode: h.mode || "Online",
+        scale: h.scale || "Global",
+        registrationDeadline: h.registration_deadline || "",
+        date: h.date || "",
+        url: h.url || "",
+        timeline: [
+          { stageName: "Registration", status: "Pending", details: "Complete registration on platform." },
+          { stageName: "Idea Submission", status: "Pending", deadline: h.registration_deadline, details: "Submit your solution." }
         ]
       }));
-      setDiscoverList(parsedMockList as any);
+      setDiscoverList(apiDiscoverList as any);
       setLoading(false);
     };
     init();

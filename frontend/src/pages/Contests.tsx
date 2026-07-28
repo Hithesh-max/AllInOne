@@ -33,15 +33,38 @@ export const Contests: React.FC = () => {
   const [detailOp, setDetailOp] = useState<CodingContest | null>(null);
 
   useEffect(() => {
-    // Load contests from initial dataset
-    const loaded = initialContests.map(c => ({
-      ...c,
-      timeline: c.timeline || [
-        { stageName: "Registration", status: "Completed", details: "Contest entry confirmed" },
-        { stageName: "Contest Live", status: "Pending", deadline: `${c.date}T${c.time}:00Z`, details: "Solve algorithmic problems" }
-      ]
-    }));
-    setContests(loaded);
+    const init = async () => {
+      try {
+        const discoverRes = await axios.get('/api/discover/contests');
+        const loaded = discoverRes.data.map((c: any) => ({
+          id: c.id.toString(),
+          title: c.title,
+          host: c.platform,
+          platform: c.platform,
+          description: "Live coding contest",
+          fee: 0,
+          teamSize: "Solo",
+          registeredCount: 0,
+          locationText: "Online",
+          isApplied: false,
+          date: c.date,
+          time: c.time,
+          duration: c.duration,
+          contestPlatform: c.platform,
+          timeline: [
+            { stageName: "Registration", status: "Completed", details: "Contest entry confirmed" },
+            { stageName: "Live Contest", status: "Pending", deadline: c.date, details: `Join on ${c.platform} at ${c.time}` }
+          ]
+        }));
+        setContests(loaded as any);
+        if (loaded.length > 0) {
+          setSelectedContest(loaded[0] as any);
+        }
+      } catch (err) {
+        console.error("Failed to load global contests", err);
+      }
+    };
+    init();
   }, []);
 
   const handleRegister = (contestId: string) => {

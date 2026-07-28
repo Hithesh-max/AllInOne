@@ -13,7 +13,8 @@ from app.database.connection import engine, Base, get_db
 from app.database.models import (
     User, UserProfile, InternshipApplication, HackathonRegistration,
     ScholarshipApplication, CalendarEvent, Expense, StudyPlan,
-    HealthRecord, TravelPlan, ChatMessage
+    HealthRecord, TravelPlan, ChatMessage,
+    GlobalHackathon, GlobalInternship, GlobalScholarship, GlobalContest
 )
 from app.auth.router import router as auth_router, get_current_user
 from app.schemas.schemas import (
@@ -35,7 +36,33 @@ from app.agents.graph import run_agentic_workflow
 # Initialize database tables
 Base.metadata.create_all(bind=engine)
 
-app = FastAPI(title="CampusCopilot AI Backend", version="1.0.0")
+import asyncio
+from contextlib import asynccontextmanager
+
+@asynccontextmanager
+async def lifespan(app: FastAPI):
+    # Start scrapers in background
+    from app.scrapers.hackathons import scrape_hackathons
+    from app.scrapers.internships import scrape_internships
+    from app.scrapers.scholarships import scrape_scholarships
+    from app.scrapers.kontests import scrape_contests
+
+    async def run_scrapers():
+        while True:
+            try:
+                await asyncio.to_thread(scrape_hackathons)
+                await asyncio.to_thread(scrape_internships)
+                await asyncio.to_thread(scrape_scholarships)
+                await asyncio.to_thread(scrape_contests)
+            except Exception as e:
+                print(f"Scraper error: {e}")
+            await asyncio.sleep(43200) # 12 hours
+
+    task = asyncio.create_task(run_scrapers())
+    yield
+    task.cancel()
+
+app = FastAPI(title="CampusCopilot AI Backend", version="1.0.0", lifespan=lifespan)
 
 # Setup CORS
 app.add_middleware(
@@ -430,6 +457,24 @@ def analyze_resume_endpoint(
         }
         
     return analysis
+
+
+# === GLOBAL DISCOVER ROUTERS ===
+@app.get("/api/discover/internships")
+def get_global_internships(db: Session = Depends(get_db)):
+    return db.query(GlobalInternship).all()
+
+@app.get("/api/discover/hackathons")
+def get_global_hackathons(db: Session = Depends(get_db)):
+    return db.query(GlobalHackathon).all()
+
+@app.get("/api/discover/scholarships")
+def get_global_scholarships(db: Session = Depends(get_db)):
+    return db.query(GlobalScholarship).all()
+
+@app.get("/api/discover/contests")
+def get_global_contests(db: Session = Depends(get_db)):
+    return db.query(GlobalContest).all()
 
 
 # === INTERNSHIPS ROUTER ===

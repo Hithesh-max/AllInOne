@@ -103,25 +103,36 @@ export const Scholarships: React.FC = () => {
       const dbList = res.data;
       setAppliedList(dbList);
       
-      const parsedMockList = initialScholarships.map(s => ({
-        ...s,
+      const discoverRes = await axios.get('/api/discover/scholarships');
+      const apiDiscoverList = discoverRes.data.map((s: any) => ({
+        id: s.id.toString(),
+        name: s.name,
+        provider: s.provider,
+        platform: "Web",
+        description: s.description,
+        fee: 0,
+        teamSize: "Solo",
+        registeredCount: 0,
+        locationText: "Global",
+        aboutText: s.description,
+        amount: s.amount || "Varies",
+        deadline: s.deadline || "Rolling",
         isApplied: dbList.some((item: any) => item.name === s.name),
-        timeline: s.timeline || [
-          { 
-            stageName: "Application Submission", 
-            status: "Pending", 
-            details: "Complete your document submissions and submit application on the portal. Once submitted, click 'Mark Stage as Completed' below.",
-            fileNameRequired: "submission_receipt.pdf"
-          },
-          { 
-            stageName: "Nodal Verification", 
-            status: "Pending", 
-            deadline: s.deadline, 
-            details: "Wait for college coordinator nodal review and board validation." 
-          }
+        url: s.url || "",
+        eligibility: {
+          categories: ["General", "OBC", "SC", "ST", "Minority", "EWS"],
+          incomeLimit: 1000000,
+          states: ["All"],
+          genders: ["All"],
+          degrees: ["All"],
+          years: ["All"]
+        },
+        timeline: [
+          { stageName: "Application Submission", status: "Pending", details: "Complete your document submissions." },
+          { stageName: "Document Verification", status: "Pending", deadline: s.deadline, details: "Wait for provider to verify documents." }
         ]
       }));
-      setDiscoverList(parsedMockList as any);
+      setDiscoverList(apiDiscoverList as any);
       setLoading(false);
     };
     init();
