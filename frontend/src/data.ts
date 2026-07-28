@@ -101,7 +101,7 @@ export const initialHackathons: Hackathon[] = [
     description: "A hybrid event designed to test code resurrection, refactoring, and AI-driven architecture modernization.",
     fee: 0,
     teamSize: "1 - 4 Members",
-    postedDate: "Jun 25, 2026",
+    postedDate: "Aug 25, 2026",
     registeredCount: 45,
     locationText: "Online",
     aboutText: "Port Mortem is a nationwide developers contest aiming to resurrect legacy projects using modern tech stacks. Teams will pick older repositories (pre-2020) and update them with containerization, TypeScript type safety, and AI assistance integrations.",
@@ -118,8 +118,8 @@ export const initialHackathons: Hackathon[] = [
     tags: ["Open Innovation", "Web Dev"],
     mode: "Online",
     scale: "National",
-    registrationDeadline: "2026-07-25T23:59:59Z",
-    date: "July 28-30, 2026",
+    registrationDeadline: "2026-09-25T23:59:59Z",
+    date: "September 28-30, 2026",
     url: "https://unstop.com/search?q=Port%20Mortem",
     isApplied: false
   },
@@ -131,10 +131,10 @@ export const initialHackathons: Hackathon[] = [
     description: "Features 24 hours of non-stop innovation, bringing together talented students to build, innovate, and create impactful solutions.",
     fee: 500,
     teamSize: "2 - 4 Members",
-    postedDate: "Jun 25, 2026",
+    postedDate: "Aug 25, 2026",
     registeredCount: 29,
     locationText: "DR.RVR NRI INSTITUTE OF TECHNOLOGY, Vijayawada, Andhra Pradesh, India",
-    aboutText: "InnoGenesis 2026 is a premium National Level Hackathon organized to test engineering problem solving. The event is scheduled to be held on 7-8 August 2026 and features 24 hours of non-stop innovation, bringing together students to solve hardware and software problems in smart systems.",
+    aboutText: "InnoGenesis 2026 is a premium National Level Hackathon organized to test engineering problem solving. The event is scheduled to be held on 7-8 October 2026 and features 24 hours of non-stop innovation, bringing together students to solve hardware and software problems in smart systems.",
     tracks: [
       "Track 1: 24-Hour Hackathon (AI/ML, Agentic AI, IoT, Healthcare, Smart Energy)",
       "Track 2: Prototype Exhibition & Demo Sessions (Hardware Prototyping)"
@@ -149,13 +149,13 @@ export const initialHackathons: Hackathon[] = [
     tags: ["AI", "Hardware", "IoT"],
     mode: "Offline",
     scale: "National",
-    registrationDeadline: "2026-07-23T23:59:59Z",
-    date: "August 7-8, 2026",
+    registrationDeadline: "2026-09-23T23:59:59Z",
+    date: "October 7-8, 2026",
     url: "https://unstop.com/search?q=InnoGenesis",
     isApplied: true,
     timeline: [
       { stageName: "Internal Evaluation", status: "Completed", details: "Cleared college-level round" },
-      { stageName: "PPT Submission", status: "Pending", deadline: "2026-06-29T23:59:59Z", daysLeft: 2, details: "Upload solution PPT", fileNameRequired: "sih_solution_proposal.pdf", fileUploaded: false },
+      { stageName: "PPT Submission", status: "Pending", deadline: "2026-08-29T23:59:59Z", daysLeft: 2, details: "Upload solution PPT", fileNameRequired: "sih_solution_proposal.pdf", fileUploaded: false },
       { stageName: "Grand Finale Result", status: "Not Yet", details: "Announced post-finals" }
     ]
   },
@@ -167,7 +167,7 @@ export const initialHackathons: Hackathon[] = [
     description: "A software and web application development sprint organized to discover regional developer talent.",
     fee: 500,
     teamSize: "2 - 4 Members",
-    postedDate: "Jun 25, 2026",
+    postedDate: "Aug 25, 2026",
     registeredCount: 18,
     locationText: "Acropolis Institute of Technology And Research, Indore, Madhya Pradesh, India",
     aboutText: "IKIGAI 2026 is a design and development marathon held at Acropolis campus in Indore. Focuses on building lightweight apps, progressive web applications, and utility plugins that solve immediate educational or micro-business needs.",
@@ -183,29 +183,29 @@ export const initialHackathons: Hackathon[] = [
     tags: ["Web Dev", "Open Innovation"],
     mode: "Offline",
     scale: "National",
-    registrationDeadline: "2026-07-23T23:59:59Z",
-    date: "July 26-27, 2026",
+    registrationDeadline: "2026-09-23T23:59:59Z",
+    date: "September 26-27, 2026",
     url: "https://unstop.com/hackathons/ikigai-2026-acropolis-institute-of-technology-and-research-indore-1703362",
     isApplied: false,
     timeline: [
       {
         stageName: "Round 1: Online Idea Submission",
         status: "Pending",
-        deadline: "2026-07-25T23:59:59Z",
-        details: "Submission\n• Upload one PPT/PPTX/PDF per team.\n• Focus on innovation, feasibility, and scalability.\n\nImportant\n• Only registered teams are eligible.\n• Each team must have at least one female participant.\n• Shortlisted teams will qualify for the 36-hour offline finale (21-23 Aug 2026).\n\nAttachments\n• PPT Template : Link\n• Problem Statement For Round 1 : Link\n• Maximum 12 Slides",
+        deadline: "2026-09-25T23:59:59Z",
+        details: "Submission\n• Upload one PPT/PPTX/PDF per team.\n• Focus on innovation, feasibility, and scalability.\n\nImportant\n• Only registered teams are eligible.\n• Each team must have at least one female participant.\n• Shortlisted teams will qualify for the 36-hour offline finale (21-23 Oct 2026).\n\nAttachments\n• PPT Template : Link\n• Problem Statement For Round 1 : Link\n• Maximum 12 Slides",
         fileNameRequired: "proposal_deck.pdf"
       },
       {
         stageName: "Screening & Shortlisting",
         status: "Pending",
-        deadline: "2026-08-05T00:00:00Z",
+        deadline: "2026-10-05T00:00:00Z",
         details: "All submissions received during Round 1 will be reviewed by the evaluation panel. Teams will be assessed based on innovation, problem understanding, technical approach, feasibility, scalability, and potential impact.\n\nBased on the evaluation, shortlisted teams will be selected to participate in the Grand Finale of IKIGAI 2026. The decision of the judges will be final and binding. Shortlisted teams will be notified through Unstop & Through Mail."
       },
       {
         stageName: "Round 2: Grand Finale – Offline Hackathon",
         status: "Pending",
-        deadline: "2026-08-23T00:00:00Z",
-        details: "Teams shortlisted from Round 1 will qualify for the Grand Finale of IKIGAI 2026. The finale will be a 36-hour offline hackathon conducted from 21-23 August 2026. Shortlisted teams will build, develop, and present their solutions before a panel of judges.\n\nParticipants will be evaluated on innovation, technical implementation, scalability, impact, presentation, and overall execution."
+        deadline: "2026-10-23T00:00:00Z",
+        details: "Teams shortlisted from Round 1 will qualify for the Grand Finale of IKIGAI 2026. The finale will be a 36-hour offline hackathon conducted from 21-23 October 2026. Shortlisted teams will build, develop, and present their solutions before a panel of judges.\n\nParticipants will be evaluated on innovation, technical implementation, scalability, impact, presentation, and overall execution."
       }
     ]
   },
@@ -235,7 +235,7 @@ export const initialHackathons: Hackathon[] = [
     tags: ["AI", "Healthcare", "Open Innovation"],
     mode: "Online",
     scale: "International",
-    registrationDeadline: "2026-08-15T23:59:59Z",
+    registrationDeadline: "2026-10-15T23:59:59Z",
     date: "Sept - Oct, 2026",
     url: "https://imaginecup.microsoft.com",
     isApplied: false
@@ -248,7 +248,7 @@ export const initialHackathons: Hackathon[] = [
     description: "Eastern India's largest community hackathon supporting developers and innovators across fields.",
     fee: 0,
     teamSize: "2 - 4 Members",
-    postedDate: "Jun 01, 2026",
+    postedDate: "Aug 01, 2026",
     registeredCount: 380,
     locationText: "Kolkata, West Bengal, India",
     aboutText: "Hack4Bengal has grown into Bengal's premier coding arena. Formed by community leaders, it provides mentorship, networking workshops, physical workspaces, and resources for 36 hours of software development.",
@@ -265,14 +265,14 @@ export const initialHackathons: Hackathon[] = [
     tags: ["Web Dev", "AI", "Blockchain"],
     mode: "Offline",
     scale: "National",
-    registrationDeadline: "2026-06-29T23:59:59Z",
-    date: "July 12-14, 2026",
+    registrationDeadline: "2026-08-29T23:59:59Z",
+    date: "September 12-14, 2026",
     url: "https://hack4bengal.tech",
     isApplied: true,
     timeline: [
       { stageName: "Registration", status: "Completed", details: "Successfully registered" },
-      { stageName: "Project Idea Submission", status: "Pending", deadline: "2026-06-28T23:59:59Z", daysLeft: 1, details: "Submit initial github repo & architecture document", fileNameRequired: "project_architecture.pdf", fileUploaded: false },
-      { stageName: "Result Announcement", status: "Not Yet", deadline: "2026-07-02T12:00:00Z", details: "Shortlisted teams for physical hack" }
+      { stageName: "Project Idea Submission", status: "Pending", deadline: "2026-08-28T23:59:59Z", daysLeft: 1, details: "Submit initial github repo & architecture document", fileNameRequired: "project_architecture.pdf", fileUploaded: false },
+      { stageName: "Result Announcement", status: "Not Yet", deadline: "2026-09-02T12:00:00Z", details: "Shortlisted teams for physical hack" }
     ]
   },
   {
@@ -283,7 +283,7 @@ export const initialHackathons: Hackathon[] = [
     description: "The world's largest space & science hackathon utilizing NASA open datasets to solve earthly and cosmic issues.",
     fee: 0,
     teamSize: "1 - 6 Members",
-    postedDate: "Jun 15, 2026",
+    postedDate: "Aug 15, 2026",
     registeredCount: 8900,
     locationText: "Hybrid / Global Local Chapters",
     aboutText: "The Space Apps Challenge is an international hackathon for coders, scientists, designers, storytellers, makers, builders, technologists, and space enthusiasts. Teams use free NASA open data to tackle real-world problems on Earth and in space.",
@@ -313,7 +313,7 @@ export const initialHackathons: Hackathon[] = [
     description: "Assemble a team, develop a Web3 solution, and pitch to leading blockchain founders in Europe.",
     fee: 0,
     teamSize: "1 - 5 Members",
-    postedDate: "Jun 10, 2026",
+    postedDate: "Aug 10, 2026",
     registeredCount: 540,
     locationText: "Brussels, Belgium",
     aboutText: "ETHGlobal events bring together the top Ethereum developers, designers, and researchers. Over 36 hours, you will build blockchain prototypes using EVM networks, smart contracts, Layer-2 scaling layers, and zero-knowledge proofs.",
@@ -328,8 +328,8 @@ export const initialHackathons: Hackathon[] = [
     tags: ["Blockchain", "Web Dev"],
     mode: "Offline",
     scale: "International",
-    registrationDeadline: "2026-07-05T23:59:59Z",
-    date: "July 10-12, 2026",
+    registrationDeadline: "2026-09-05T23:59:59Z",
+    date: "September 10-12, 2026",
     url: "https://ethglobal.com",
     isApplied: false
   },
@@ -341,7 +341,7 @@ export const initialHackathons: Hackathon[] = [
     description: "Nationwide initiative to provide students a platform to solve pressing problems of daily lives.",
     fee: 0,
     teamSize: "6 Members",
-    postedDate: "Jun 20, 2026",
+    postedDate: "Aug 20, 2026",
     registeredCount: 45000,
     locationText: "Hybrid (Grand Finale Offline at Nodal Centres)",
     aboutText: "Smart India Hackathon is a unique initiative to identify new digital technologies to solve various issues faced by ministries and public departments. Involves hardware and software divisions with thousands of colleges taking part.",
@@ -358,7 +358,7 @@ export const initialHackathons: Hackathon[] = [
     tags: ["Open Innovation", "Cybersecurity", "Hardware"],
     mode: "Offline",
     scale: "National",
-    registrationDeadline: "2026-07-30T23:59:59Z",
+    registrationDeadline: "2026-09-30T23:59:59Z",
     date: "September 12-15, 2026",
     url: "https://sih.gov.in",
     isApplied: false
@@ -371,7 +371,7 @@ export const initialHackathons: Hackathon[] = [
     description: "Support builders in solving real-world Indian infrastructural challenges using software.",
     fee: 0,
     teamSize: "1 - 4 Members",
-    postedDate: "Jun 18, 2026",
+    postedDate: "Aug 18, 2026",
     registeredCount: 1800,
     locationText: "Online",
     aboutText: "BuildIndia by Devfolio targets localized software problems. From hyper-local logistics optimization to state-wise agricultural dashboard systems, you are encouraged to construct usable open-source applications.",
@@ -387,8 +387,8 @@ export const initialHackathons: Hackathon[] = [
     tags: ["Web Dev", "Open Innovation"],
     mode: "Online",
     scale: "National",
-    registrationDeadline: "2026-07-15T23:59:59Z",
-    date: "July 18-20, 2026",
+    registrationDeadline: "2026-09-15T23:59:59Z",
+    date: "September 18-20, 2026",
     url: "https://devfolio.co",
     isApplied: false
   },
@@ -400,7 +400,7 @@ export const initialHackathons: Hackathon[] = [
     description: "The global celebration that kicks off the 2026 hackathon season with workshops, panels, and projects.",
     fee: 0,
     teamSize: "1 - 4 Members",
-    postedDate: "Jun 22, 2026",
+    postedDate: "Aug 22, 2026",
     registeredCount: 12400,
     locationText: "Online / Global chapters",
     aboutText: "Init is MLH's flagship kickoff week. Includes coding mini-challenges, technical workshops hosted by GitHub/Google, and community building calls for high school and university students alike.",
@@ -416,8 +416,8 @@ export const initialHackathons: Hackathon[] = [
     tags: ["Web Dev", "Open Innovation"],
     mode: "Online",
     scale: "International",
-    registrationDeadline: "2026-07-12T23:59:59Z",
-    date: "July 15-22, 2026",
+    registrationDeadline: "2026-09-12T23:59:59Z",
+    date: "September 15-22, 2026",
     url: "https://mlh.io",
     isApplied: false
   },
@@ -429,7 +429,7 @@ export const initialHackathons: Hackathon[] = [
     description: "Analyze global climate metrics and forecast anomalies using ML models.",
     fee: 0,
     teamSize: "Solo",
-    postedDate: "Jun 12, 2026",
+    postedDate: "Aug 12, 2026",
     registeredCount: 3800,
     locationText: "Online",
     aboutText: "A data science competition where teams build predictive models using satellite temperature indexes, solar radiation records, and carbon emission stats. Leaderboard is evaluated on root-mean-squared error (RMSE).",
@@ -444,8 +444,8 @@ export const initialHackathons: Hackathon[] = [
     tags: ["AI", "Open Innovation"],
     mode: "Online",
     scale: "International",
-    registrationDeadline: "2026-08-20T23:59:59Z",
-    date: "Aug - Sept, 2026",
+    registrationDeadline: "2026-10-20T23:59:59Z",
+    date: "Oct - Sept, 2026",
     url: "https://kaggle.com",
     isApplied: false
   },
@@ -485,7 +485,7 @@ export const initialHackathons: Hackathon[] = [
     description: "Solve key cyber challenges like dark web monitoring, phishing analyzers, and network firewalls.",
     fee: 250,
     teamSize: "2 - 4 Members",
-    postedDate: "Jun 24, 2026",
+    postedDate: "Aug 24, 2026",
     registeredCount: 950,
     locationText: "Online (Finals at Delhi Police HQ)",
     aboutText: "Hack2Skill collaborates with government divisions to organize CyberSafe India. The focus is to address modern financial fraud, deepfake detection, and cryptographic protocols for public networks.",
@@ -501,8 +501,8 @@ export const initialHackathons: Hackathon[] = [
     tags: ["Cybersecurity", "AI"],
     mode: "Online",
     scale: "National",
-    registrationDeadline: "2026-07-28T23:59:59Z",
-    date: "August 10-12, 2026",
+    registrationDeadline: "2026-09-28T23:59:59Z",
+    date: "October 10-12, 2026",
     url: "https://hack2skill.com",
     isApplied: false
   },
@@ -514,7 +514,7 @@ export const initialHackathons: Hackathon[] = [
     description: "Launch functional multi-agent workflows using zero-knowledge identity and decentralized hosting.",
     fee: 0,
     teamSize: "1 - 5 Members",
-    postedDate: "Jun 15, 2026",
+    postedDate: "Aug 15, 2026",
     registeredCount: 420,
     locationText: "Online",
     aboutText: "DoraHacks is a global developer sandbox. This marathon targets autonomous AI workflows that interface with Web3. Build LLM pipelines that execute smart contracts or manage wallet transactions under secure cryptographic layers.",
@@ -529,8 +529,8 @@ export const initialHackathons: Hackathon[] = [
     tags: ["AI", "Blockchain"],
     mode: "Online",
     scale: "International",
-    registrationDeadline: "2026-07-19T23:59:59Z",
-    date: "July 24-26, 2026",
+    registrationDeadline: "2026-09-19T23:59:59Z",
+    date: "September 24-26, 2026",
     url: "https://dorahacks.io",
     isApplied: false
   },
@@ -542,7 +542,7 @@ export const initialHackathons: Hackathon[] = [
     description: "A fast-paced developer hackathon series connecting global talent with Silicon Valley mentors.",
     fee: 0,
     teamSize: "2 - 5 Members",
-    postedDate: "Jun 02, 2026",
+    postedDate: "Aug 02, 2026",
     registeredCount: 1250,
     locationText: "Offline Chapters (Bangalore City centre)",
     aboutText: "AngelHack's flagship challenge has returned to India. Form a team, refine a pitch, and code a functional software prototype in 30 hours. Winners are fast-tracked into the AngelHack startup accelerator program.",
@@ -558,8 +558,8 @@ export const initialHackathons: Hackathon[] = [
     tags: ["Open Innovation", "Web Dev"],
     mode: "Offline",
     scale: "International",
-    registrationDeadline: "2026-07-08T23:59:59Z",
-    date: "July 18-19, 2026",
+    registrationDeadline: "2026-09-08T23:59:59Z",
+    date: "September 18-19, 2026",
     url: "https://angelhack.com",
     isApplied: false
   }
@@ -593,12 +593,12 @@ export const initialInternships: Internship[] = [
     stipendValue: 100000,
     location: "On-site",
     field: "Software",
-    deadline: "2026-07-02T23:59:59Z",
+    deadline: "2026-09-02T23:59:59Z",
     url: "https://careers.google.com/jobs/results/?q=STEP%20Intern",
     isApplied: true,
     timeline: [
       { stageName: "Resume Screen", status: "Completed", details: "Shortlisted for OA" },
-      { stageName: "Online Assessment", status: "Pending", deadline: "2026-06-29T23:59:59Z", daysLeft: 2, details: "2 Coding questions on DSA" }
+      { stageName: "Online Assessment", status: "Pending", deadline: "2026-08-29T23:59:59Z", daysLeft: 2, details: "2 Coding questions on DSA" }
     ]
   },
   {
@@ -627,12 +627,12 @@ export const initialInternships: Internship[] = [
     stipendValue: 80000,
     location: "Hybrid",
     field: "Software",
-    deadline: "2026-07-05T23:59:59Z",
+    deadline: "2026-09-05T23:59:59Z",
     url: "https://www.amazon.jobs/en/job_categories/software-development",
     isApplied: true,
     timeline: [
       { stageName: "Resume Screen", status: "Completed" },
-      { stageName: "Technical Interview 1", status: "Pending", deadline: "2026-06-30T10:00:00Z", daysLeft: 3, details: "DSA + Leadership Principles" },
+      { stageName: "Technical Interview 1", status: "Pending", deadline: "2026-08-30T10:00:00Z", daysLeft: 3, details: "DSA + Leadership Principles" },
       { stageName: "Technical Interview 2", status: "Not Yet", details: "Final round interview" }
     ]
   },
@@ -662,7 +662,7 @@ export const initialInternships: Internship[] = [
     stipendValue: 45000,
     location: "Remote",
     field: "AI",
-    deadline: "2026-07-18T23:59:59Z",
+    deadline: "2026-09-18T23:59:59Z",
     url: "https://wellfound.com/jobs",
     isApplied: false
   },
@@ -692,7 +692,7 @@ export const initialInternships: Internship[] = [
     stipendValue: 25000,
     location: "On-site",
     field: "ECE",
-    deadline: "2026-07-10T23:59:59Z",
+    deadline: "2026-09-10T23:59:59Z",
     url: "https://www.isro.gov.in/Careers.html",
     isApplied: false
   },
@@ -722,7 +722,7 @@ export const initialInternships: Internship[] = [
     stipendValue: 20000,
     location: "On-site",
     field: "ECE",
-    deadline: "2026-07-08T23:59:59Z",
+    deadline: "2026-09-08T23:59:59Z",
     url: "https://www.drdo.gov.in/careers",
     isApplied: false
   },
@@ -752,7 +752,7 @@ export const initialInternships: Internship[] = [
     stipendValue: 15000,
     location: "Remote",
     field: "Software",
-    deadline: "2026-07-15T23:59:59Z",
+    deadline: "2026-09-15T23:59:59Z",
     url: "https://internshala.com",
     isApplied: false
   },
@@ -781,7 +781,7 @@ export const initialInternships: Internship[] = [
     stipendValue: 25000,
     location: "On-site",
     field: "Software",
-    deadline: "2026-07-11T23:59:59Z",
+    deadline: "2026-09-11T23:59:59Z",
     url: "https://www.indeed.com",
     isApplied: false
   },
@@ -810,7 +810,7 @@ export const initialInternships: Internship[] = [
     stipendValue: 18000,
     location: "On-site",
     field: "Software",
-    deadline: "2026-07-28T23:59:59Z",
+    deadline: "2026-09-28T23:59:59Z",
     url: "https://www.tcs.com/careers",
     isApplied: false
   },
@@ -839,7 +839,7 @@ export const initialInternships: Internship[] = [
     stipendValue: 35000,
     location: "Remote",
     field: "Software",
-    deadline: "2026-07-12T23:59:59Z",
+    deadline: "2026-09-12T23:59:59Z",
     url: "https://www.c4gt.in/",
     isApplied: false
   },
@@ -868,7 +868,7 @@ export const initialInternships: Internship[] = [
     stipendValue: 12000,
     location: "Remote",
     field: "ECE",
-    deadline: "2026-07-20T23:59:59Z",
+    deadline: "2026-09-20T23:59:59Z",
     url: "https://internship.aicte-india.org/",
     isApplied: false
   }
@@ -898,7 +898,7 @@ export const initialScholarships: Scholarship[] = [
       "Monthly maintenance allowance of ₹1,200 for hostellers"
     ],
     amount: "₹50,000/yr",
-    deadline: "2026-08-30T23:59:59Z",
+    deadline: "2026-10-30T23:59:59Z",
     url: "https://scholarships.gov.in/",
     isApplied: false,
     eligibility: {
@@ -934,12 +934,12 @@ export const initialScholarships: Scholarship[] = [
       "Access to Reliance alumni group"
     ],
     amount: "₹2,00,000/yr",
-    deadline: "2026-07-04T23:59:59Z",
+    deadline: "2026-09-04T23:59:59Z",
     url: "https://www.scholarships.reliancefoundation.org/",
     isApplied: true,
     timeline: [
       { stageName: "Application & Docs Verified", status: "Completed", details: "All academic certificates validated" },
-      { stageName: "Interview Round", status: "Pending", deadline: "2026-07-04T23:59:59Z", daysLeft: 7, details: "Personal interview with foundation board" }
+      { stageName: "Interview Round", status: "Pending", deadline: "2026-09-04T23:59:59Z", daysLeft: 7, details: "Personal interview with foundation board" }
     ],
     eligibility: {
       categories: ["General", "OBC", "SC", "ST", "EWS", "Minority"],
@@ -972,7 +972,7 @@ export const initialScholarships: Scholarship[] = [
       "Mentoring by Tata professionals"
     ],
     amount: "₹1,50,000/yr",
-    deadline: "2026-07-20T23:59:59Z",
+    deadline: "2026-09-20T23:59:59Z",
     url: "https://www.tatatrusts.org/our-areas/individual-grants-education/",
     isApplied: false,
     eligibility: {
@@ -1005,7 +1005,7 @@ export const initialScholarships: Scholarship[] = [
       "₹50,000 per annum towards college fee, books, computer purchase, and equipment"
     ],
     amount: "₹50,000/yr",
-    deadline: "2026-08-15T23:59:59Z",
+    deadline: "2026-10-15T23:59:59Z",
     url: "https://www.aicte-india.org/schemes/students-development-schemes/pragati-scholarship-scheme",
     isApplied: false,
     eligibility: {
@@ -1038,7 +1038,7 @@ export const initialScholarships: Scholarship[] = [
       "Financial assistance up to ₹75,000 to cover tuition fees"
     ],
     amount: "₹75,000/yr",
-    deadline: "2026-07-28T23:59:59Z",
+    deadline: "2026-09-28T23:59:59Z",
     url: "https://www.buddy4study.com/page/hdfc-bank-parivartan-ecss-scholarship",
     isApplied: false,
     eligibility: {
@@ -1071,7 +1071,7 @@ export const initialScholarships: Scholarship[] = [
       "₹1,00,000 per year towards tuition fees, hostel, and academic materials"
     ],
     amount: "₹1,00,000/yr",
-    deadline: "2026-07-31T23:59:59Z",
+    deadline: "2026-09-31T23:59:59Z",
     url: "https://www.buddy4study.com/page/kotak-kanya-scholarship",
     isApplied: false,
     eligibility: {
@@ -1105,14 +1105,14 @@ export const initialContests: CodingContest[] = [
       "Codeforces Rating adjustments",
       "Global leaderboard badges"
     ],
-    date: "2026-06-28",
+    date: "2026-08-28",
     time: "20:05",
     duration: "2 hrs",
     contestPlatform: "Codeforces",
     isApplied: true,
     timeline: [
       { stageName: "Registration", status: "Completed", details: "Registered for Round 950" },
-      { stageName: "Contest Live", status: "Pending", deadline: "2026-06-28T20:05:00Z", daysLeft: 1, details: "Solve 6 algorithmic challenges" }
+      { stageName: "Contest Live", status: "Pending", deadline: "2026-08-28T20:05:00Z", daysLeft: 1, details: "Solve 6 algorithmic challenges" }
     ]
   },
   {
@@ -1135,7 +1135,7 @@ export const initialContests: CodingContest[] = [
       "Global Ranking profile update",
       "Sponsor company profile referrals"
     ],
-    date: "2026-06-28",
+    date: "2026-08-28",
     time: "08:00",
     duration: "1.5 hrs",
     contestPlatform: "LeetCode",
@@ -1160,7 +1160,7 @@ export const initialContests: CodingContest[] = [
       "CodeChef Rating adjustments",
       "CodeChef laddu points for shop rewards"
     ],
-    date: "2026-06-30",
+    date: "2026-08-30",
     time: "20:00",
     duration: "2 hrs",
     contestPlatform: "CodeChef",
@@ -1185,7 +1185,7 @@ export const initialContests: CodingContest[] = [
       "HackerRank gold star badge",
       "Shareable LinkedIn certification"
     ],
-    date: "2026-07-02",
+    date: "2026-09-02",
     time: "19:00",
     duration: "3 hrs",
     contestPlatform: "HackerRank",
@@ -1209,7 +1209,7 @@ export const initialContests: CodingContest[] = [
     benefits: [
       "AtCoder algorithmic rating points"
     ],
-    date: "2026-07-04",
+    date: "2026-09-04",
     time: "17:30",
     duration: "1.6 hrs",
     contestPlatform: "AtCoder",
@@ -1234,7 +1234,7 @@ export const initialContests: CodingContest[] = [
       "Codeforces Rating adjustments",
       "Leaderboard ranking badge"
     ],
-    date: "2026-07-05",
+    date: "2026-09-05",
     time: "20:05",
     duration: "2.5 hrs",
     contestPlatform: "Codeforces",
