@@ -14,7 +14,7 @@ def scrape_scholarships():
         }
         response = requests.get(url, headers=headers, timeout=15)
         if response.status_code == 200:
-            root = ET.fromstring(response.content)
+            content = response.text
             
             db: Session = SessionLocal()
             try:
@@ -22,11 +22,18 @@ def scrape_scholarships():
                 db.commit()
                 
                 added = 0
-                for item in root.findall('.//item')[:30]:
-                    title = item.find('title').text if item.find('title') is not None else "Unknown Scholarship"
-                    link = item.find('link').text if item.find('link') is not None else ""
-                    pub_date = item.find('pubDate').text if item.find('pubDate') is not None else ""
-                    description = item.find('description').text if item.find('description') is not None else ""
+                items = re.findall(r'<item>(.*?)</item>', content, re.DOTALL)
+                for item in items[:30]:
+                    t_match = re.search(r'<title>(.*?)</title>', item, re.DOTALL)
+                    title = t_match.group(1).replace('<![CDATA[', '').replace(']]>', '') if t_match else "Unknown Scholarship"
+                    
+                    l_match = re.search(r'<link>(.*?)</link>', item, re.DOTALL)
+                    link = l_match.group(1).strip() if l_match else ""
+                    
+                    d_match = re.search(r'<description><!\[CDATA\[(.*?)\]\]></description>', item, re.DOTALL)
+                    if not d_match:
+                        d_match = re.search(r'<description>(.*?)</description>', item, re.DOTALL)
+                    description = d_match.group(1) if d_match else ""
                     
                     clean_desc = re.sub('<[^<]+?>', '', description)[:200] + "..."
                     

@@ -9,7 +9,7 @@ from fastapi.middleware.cors import CORSMiddleware
 from sqlalchemy.orm import Session
 from typing import List
 
-from app.database.connection import engine, Base, get_db
+from app.database.connection import engine, Base, get_db, SessionLocal
 from app.database.models import (
     User, UserProfile, InternshipApplication, HackathonRegistration,
     ScholarshipApplication, CalendarEvent, Expense, StudyPlan,
