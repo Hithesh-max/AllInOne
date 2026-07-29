@@ -10,8 +10,6 @@ import { Hackathons } from './pages/Hackathons';
 import { Scholarships } from './pages/Scholarships';
 import { Resume } from './pages/Resume';
 import { StudyPlanner } from './pages/StudyPlanner';
-import { Finance } from './pages/Finance';
-import { Shopping } from './pages/Shopping';
 import { CalendarPage } from './pages/CalendarPage';
 import { Profile } from './pages/Profile';
 import { Settings } from './pages/Settings';
@@ -51,10 +49,6 @@ export const App: React.FC = () => {
         return <Resume />;
       case 'study':
         return <StudyPlanner />;
-      case 'finance':
-        return <Finance />;
-      case 'shopping':
-        return <Shopping />;
       case 'calendar':
         return <CalendarPage />;
       case 'profile':
