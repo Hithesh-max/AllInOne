@@ -221,10 +221,24 @@ class ChatMessageCreate(BaseModel):
 
 class ChatMessageResponse(BaseModel):
     id: int
+    user_id: int
     session_id: str
     role: str
     content: str
     timestamp: datetime
+
+    class Config:
+        from_attributes = True
+
+# Notification schemas
+class NotificationResponse(BaseModel):
+    id: int
+    user_id: int
+    title: str
+    message: str
+    is_read: bool
+    type: str
+    created_at: datetime
 
     class Config:
         from_attributes = True

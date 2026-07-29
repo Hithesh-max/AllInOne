@@ -169,23 +169,32 @@ export const Hackathons: React.FC = () => {
       }
     ];
     try {
+      let formattedDate = null;
+      if (item.registrationDeadline && item.registrationDeadline !== "Rolling") {
+        try {
+          formattedDate = new Date(item.registrationDeadline).toISOString().split('T')[0];
+        } catch(e) {}
+      }
+
+      const targetUrl = item.url || "https://unstop.com";
+      const newWindow = window.open('about:blank', '_blank');
+
       await axios.post('/api/hackathons', {
         name: item.title,
-        dates: item.date,
-        status: 'In Progress',
-        team_status: item.teamSize,
+        status: 'Registered',
+        date: formattedDate || item.date,
         notes: item.description,
         timeline: defaultTimeline
       });
       
       await fetchDbRegistrations();
-      
-      // Auto-close details drawer so the new sidebar timeline becomes visible!
       setDetailOp(null);
 
-      // Open the exact link where we found it!
-      const targetUrl = item.url || "https://unstop.com";
-      window.open(targetUrl, '_blank');
+      if (newWindow) {
+        newWindow.location.href = targetUrl;
+      } else {
+        window.open(targetUrl, '_blank');
+      }
     } catch (err) {
       console.error("Failed to register from catalog", err);
     }
@@ -306,6 +315,7 @@ export const Hackathons: React.FC = () => {
                   <div className="flex gap-4 text-[10px] text-slate-500 pt-1 border-t border-white/5">
                     <div>💰 Entry: <strong>{item.fee === 0 ? 'Free' : `₹${item.fee}`}</strong></div>
                     <div>👥 Size: <strong>{item.teamSize}</strong></div>
+                    <div>⏳ Deadline: <strong>{item.registrationDeadline ? item.registrationDeadline.split('T')[0] : "Rolling"}</strong></div>
                   </div>
                 </div>
                 <div className="text-right shrink-0 flex flex-col items-end justify-between h-full">

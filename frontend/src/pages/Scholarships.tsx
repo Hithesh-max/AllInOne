@@ -195,8 +195,15 @@ export const Scholarships: React.FC = () => {
       }
     ];
     try {
-      // Split the ISO date to YYYY-MM-DD so that FastAPI/Pydantic validation doesn't throw a 422 error!
-      const formattedDate = item.deadline ? item.deadline.split('T')[0] : null;
+      let formattedDate = null;
+      if (item.deadline && item.deadline !== "Rolling") {
+        try {
+          formattedDate = new Date(item.deadline).toISOString().split('T')[0];
+        } catch(e) {}
+      }
+
+      const targetUrl = item.url || "https://scholarships.gov.in/";
+      const newWindow = window.open('about:blank', '_blank');
 
       await axios.post('/api/scholarships', {
         name: item.name,
@@ -208,13 +215,13 @@ export const Scholarships: React.FC = () => {
       });
       
       await fetchDbScholarships();
-      
-      // Auto-close details drawer so the new sidebar timeline becomes visible!
       setDetailOp(null);
 
-      // Open the exact link where we found it!
-      const targetUrl = item.url || "https://scholarships.gov.in/";
-      window.open(targetUrl, '_blank');
+      if (newWindow) {
+        newWindow.location.href = targetUrl;
+      } else {
+        window.open(targetUrl, '_blank');
+      }
     } catch (err) {
       console.error("Failed to apply scholarship from catalog", err);
     }
@@ -404,6 +411,7 @@ export const Scholarships: React.FC = () => {
                 <p className="text-xs text-slate-400 line-clamp-2">{item.description}</p>
                 <div className="flex justify-between items-center pt-2 border-t border-white/5 text-[10px] text-slate-500">
                   <span>Income Limit: <strong className="text-slate-400">₹{item.eligibility.incomeLimit.toLocaleString('en-IN')}</strong></span>
+                  <span>Deadline: <strong className="text-slate-400">{item.deadline.split('T')[0]}</strong></span>
                   <button 
                     onClick={(e) => {
                       e.stopPropagation();

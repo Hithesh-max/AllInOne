@@ -168,8 +168,15 @@ export const Internships: React.FC = () => {
       }
     ];
     try {
-      // Split the ISO date to YYYY-MM-DD so that FastAPI/Pydantic validation doesn't throw a 422 error!
-      const formattedDate = item.deadline ? item.deadline.split('T')[0] : null;
+      let formattedDate = null;
+      if (item.deadline && item.deadline !== "Rolling") {
+        try {
+          formattedDate = new Date(item.deadline).toISOString().split('T')[0];
+        } catch(e) {}
+      }
+
+      const targetUrl = item.url || "https://careers.google.com";
+      const newWindow = window.open('about:blank', '_blank');
 
       await axios.post('/api/internships', {
         company: item.company,
@@ -182,13 +189,13 @@ export const Internships: React.FC = () => {
       });
       
       await fetchDbApplications();
-      
-      // Auto-close details drawer so the new sidebar timeline becomes visible!
       setDetailOp(null);
 
-      // Open the exact link where we found it!
-      const targetUrl = item.url || "https://careers.google.com";
-      window.open(targetUrl, '_blank');
+      if (newWindow) {
+        newWindow.location.href = targetUrl;
+      } else {
+        window.open(targetUrl, '_blank');
+      }
     } catch (err) {
       console.error("Failed to apply from catalog", err);
     }
@@ -315,6 +322,7 @@ export const Internships: React.FC = () => {
                   <div className="flex gap-4 text-[10px] text-slate-500 pt-1 border-t border-white/5">
                     <div>💰 Stipend: <strong>{item.stipend}</strong></div>
                     <div>📍 Location: <strong>{item.locationText}</strong></div>
+                    <div>⏳ Deadline: <strong>{item.deadline}</strong></div>
                   </div>
                 </div>
                 <div className="text-right shrink-0 flex flex-col items-end justify-between h-full">

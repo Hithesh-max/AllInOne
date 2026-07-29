@@ -1,4 +1,5 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
+import axios from 'axios';
 import { Bell, Sun, Moon, Settings, Menu } from 'lucide-react';
 import { Sidebar } from './Sidebar';
 import type { ViewType } from './Sidebar';
@@ -15,11 +16,31 @@ export const DashboardLayout: React.FC<DashboardLayoutProps> = ({ currentView, s
   const { theme, toggleTheme } = useTheme();
   const [showNotifications, setShowNotifications] = useState(false);
 
-  const notifications = [
-    { id: 1, title: 'Resume Parsed', body: 'ATS Score: 78/100. Review missing skills.', time: '2 hours ago' },
-    { id: 2, title: 'Study Session Reminder', body: 'DBMS revision scheduled at 4 PM.', time: '5 hours ago' },
-    { id: 3, title: 'Meta Internship Match', body: 'Excellent alignment (92%) detected!', time: '1 day ago' },
-  ];
+  const [notifications, setNotifications] = useState<any[]>([]);
+
+  useEffect(() => {
+    const fetchNotifs = async () => {
+      try {
+        const res = await axios.get('/api/notifications');
+        setNotifications(res.data);
+      } catch (err) {
+        console.error("Failed to load notifications", err);
+      }
+    };
+    fetchNotifs();
+    // Poll every 5 minutes
+    const interval = setInterval(fetchNotifs, 300000);
+    return () => clearInterval(interval);
+  }, []);
+
+  const markRead = async (id: number) => {
+    try {
+      await axios.post(`/api/notifications/${id}/read`);
+      setNotifications(prev => prev.filter(n => n.id !== id));
+    } catch (err) {
+      console.error(err);
+    }
+  };
 
   return (
     <div className="flex h-screen w-screen overflow-hidden bg-dark-900 text-slate-100">
@@ -56,8 +77,12 @@ export const DashboardLayout: React.FC<DashboardLayoutProps> = ({ currentView, s
               className="p-2 rounded-xl bg-white/5 border border-white/5 text-slate-400 hover:text-slate-200 hover:bg-white/10 transition-all relative"
             >
               <Bell className="h-4.5 w-4.5" />
-              <span className="absolute -top-1 -right-1 h-2.5 w-2.5 bg-brand-cyan rounded-full animate-ping" />
-              <span className="absolute -top-1 -right-1 h-2.5 w-2.5 bg-brand-cyan rounded-full" />
+              {notifications.length > 0 && (
+                <>
+                  <span className="absolute -top-1 -right-1 h-2.5 w-2.5 bg-brand-cyan rounded-full animate-ping" />
+                  <span className="absolute -top-1 -right-1 h-2.5 w-2.5 bg-brand-cyan rounded-full" />
+                </>
+              )}
             </button>
 
             <button 
@@ -75,13 +100,15 @@ export const DashboardLayout: React.FC<DashboardLayoutProps> = ({ currentView, s
                   <button className="text-[10px] text-brand-cyan hover:underline font-medium">Clear All</button>
                 </div>
                 <div className="space-y-3 max-h-60 overflow-y-auto">
-                  {notifications.map(notif => (
-                    <div key={notif.id} className="p-2 rounded-lg hover:bg-white/5 transition-colors cursor-pointer">
+                  {notifications.length === 0 ? (
+                    <div className="p-4 text-center text-xs text-slate-500 italic">No new notifications.</div>
+                  ) : notifications.map(notif => (
+                    <div key={notif.id} onClick={() => markRead(notif.id)} className="p-2 rounded-lg hover:bg-white/5 transition-colors cursor-pointer">
                       <div className="flex justify-between items-start mb-0.5">
                         <h4 className="font-semibold text-xs text-brand-neon">{notif.title}</h4>
-                        <span className="text-[9px] text-slate-500">{notif.time}</span>
+                        <span className="text-[9px] text-brand-cyan font-bold uppercase">{notif.type}</span>
                       </div>
-                      <p className="text-[11px] text-slate-300 leading-normal">{notif.body}</p>
+                      <p className="text-[11px] text-slate-300 leading-normal">{notif.message}</p>
                     </div>
                   ))}
                 </div>

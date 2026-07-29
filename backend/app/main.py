@@ -13,7 +13,7 @@ from app.database.connection import engine, Base, get_db
 from app.database.models import (
     User, UserProfile, InternshipApplication, HackathonRegistration,
     ScholarshipApplication, CalendarEvent, Expense, StudyPlan,
-    HealthRecord, TravelPlan, ChatMessage,
+    HealthRecord, TravelPlan, ChatMessage, Notification,
     GlobalHackathon, GlobalInternship, GlobalScholarship, GlobalContest
 )
 from app.auth.router import router as auth_router, get_current_user
@@ -58,9 +58,47 @@ async def lifespan(app: FastAPI):
                 print(f"Scraper error: {e}")
             await asyncio.sleep(43200) # 12 hours
 
-    task = asyncio.create_task(run_scrapers())
+    async def check_deadlines():
+        while True:
+            try:
+                def run_check():
+                    db = SessionLocal()
+                    try:
+                        tomorrow = (datetime.datetime.utcnow() + datetime.timedelta(days=1)).date()
+                        # Check internships
+                        internships = db.query(InternshipApplication).filter(InternshipApplication.deadline == tomorrow, InternshipApplication.status != "Rejected").all()
+                        for item in internships:
+                            existing = db.query(Notification).filter(Notification.user_id == item.user_id, Notification.title.contains(item.company)).first()
+                            if not existing:
+                                db.add(Notification(user_id=item.user_id, title=f"Deadline Alert: {item.company}", message=f"Your application for {item.role} at {item.company} is due tomorrow!"))
+                        
+                        # Check hackathons
+                        hackathons = db.query(HackathonRegistration).filter(HackathonRegistration.date == str(tomorrow)).all()
+                        for item in hackathons:
+                            existing = db.query(Notification).filter(Notification.user_id == item.user_id, Notification.title.contains(item.name)).first()
+                            if not existing:
+                                db.add(Notification(user_id=item.user_id, title=f"Deadline Alert: {item.name}", message=f"Your hackathon {item.name} is starting/due tomorrow!"))
+                        
+                        # Check scholarships
+                        scholarships = db.query(ScholarshipApplication).filter(ScholarshipApplication.deadline == tomorrow).all()
+                        for item in scholarships:
+                            existing = db.query(Notification).filter(Notification.user_id == item.user_id, Notification.title.contains(item.name)).first()
+                            if not existing:
+                                db.add(Notification(user_id=item.user_id, title=f"Deadline Alert: {item.name}", message=f"Your scholarship application for {item.name} is due tomorrow!"))
+                        
+                        db.commit()
+                    finally:
+                        db.close()
+                await asyncio.to_thread(run_check)
+            except Exception as e:
+                print(f"Deadline checker error: {e}")
+            await asyncio.sleep(43200) # 12 hours
+
+    task1 = asyncio.create_task(run_scrapers())
+    task2 = asyncio.create_task(check_deadlines())
     yield
-    task.cancel()
+    task1.cancel()
+    task2.cancel()
 
 app = FastAPI(title="CampusCopilot AI Backend", version="1.0.0", lifespan=lifespan)
 
@@ -868,6 +906,30 @@ def get_calendar(current_user: User = Depends(get_current_user), db: Session = D
             synthetic_id -= 1
 
     return results
+
+@app.delete("/api/calendar/{event_id}")
+def remove_calendar(event_id: int, current_user: User = Depends(get_current_user), db: Session = Depends(get_db)):
+    evt = db.query(CalendarEvent).filter(CalendarEvent.id == event_id, CalendarEvent.user_id == current_user.id).first()
+    if not evt:
+        raise HTTPException(status_code=404, detail="Event not found")
+    db.delete(evt)
+    db.commit()
+    return {"message": "Deleted successfully"}
+
+@app.get("/api/notifications", response_model=List[dict])
+def get_notifications(current_user: User = Depends(get_current_user), db: Session = Depends(get_db)):
+    from app.schemas.schemas import NotificationResponse
+    nots = db.query(Notification).filter(Notification.user_id == current_user.id).order_by(Notification.created_at.desc()).all()
+    return [NotificationResponse.model_validate(n).model_dump() for n in nots]
+
+@app.post("/api/notifications/{notif_id}/read")
+def read_notification(notif_id: int, current_user: User = Depends(get_current_user), db: Session = Depends(get_db)):
+    n = db.query(Notification).filter(Notification.id == notif_id, Notification.user_id == current_user.id).first()
+    if not n:
+        raise HTTPException(status_code=404, detail="Not found")
+    n.is_read = True
+    db.commit()
+    return {"message": "Read successfully"}
 
 @app.get("/api/shopping/compare")
 def compare_shopping_prices(query: str, current_user: User = Depends(get_current_user), db: Session = Depends(get_db)):

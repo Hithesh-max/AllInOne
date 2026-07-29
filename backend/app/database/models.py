@@ -1,5 +1,5 @@
 import datetime
-from sqlalchemy import Column, Integer, String, Float, DateTime, ForeignKey, Text, JSON, Date
+from sqlalchemy import Column, Integer, String, Float, DateTime, ForeignKey, Text, JSON, Date, Boolean
 from sqlalchemy.orm import relationship
 from app.database.connection import Base
 
@@ -22,6 +22,7 @@ class User(Base):
     health_records = relationship("HealthRecord", back_populates="user", cascade="all, delete-orphan")
     travel_plans = relationship("TravelPlan", back_populates="user", cascade="all, delete-orphan")
     chat_messages = relationship("ChatMessage", back_populates="user", cascade="all, delete-orphan")
+    notifications = relationship("Notification", back_populates="user", cascade="all, delete-orphan")
 
 
 class UserProfile(Base):
@@ -225,3 +226,16 @@ class GlobalContest(Base):
     duration = Column(String, nullable=True)
     url = Column(String, nullable=True)
     created_at = Column(DateTime, default=datetime.datetime.utcnow)
+
+class Notification(Base):
+    __tablename__ = "notifications"
+
+    id = Column(Integer, primary_key=True, index=True)
+    user_id = Column(Integer, ForeignKey("users.id"), nullable=False)
+    title = Column(String, nullable=False)
+    message = Column(Text, nullable=False)
+    is_read = Column(Boolean, default=False)
+    type = Column(String, default="deadline")
+    created_at = Column(DateTime, default=datetime.datetime.utcnow)
+
+    user = relationship("User", back_populates="notifications")
