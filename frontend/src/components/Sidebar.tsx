@@ -47,8 +47,6 @@ export const Sidebar: React.FC<SidebarProps> = ({ currentView, setView }) => {
           </div>
         </div>
 
-        </div>
-
         {/* User Info Capsule */}
         <div className="mx-4 mb-5 p-3 rounded-xl bg-white/5 border border-white/5 flex items-center gap-3">
           <div className="h-8 w-8 rounded-full bg-brand-violet/20 border border-brand-violet/40 flex items-center justify-center font-bold text-brand-neon">
