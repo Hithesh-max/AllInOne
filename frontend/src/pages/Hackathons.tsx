@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
-import { Award, Plus, Calendar, Clock, Search, ShieldCheck, UserCheck } from 'lucide-react';
+import { Award, Plus, Calendar, Clock, Search, ShieldCheck, UserCheck, Loader } from 'lucide-react';
 import Timeline from '../components/Timeline';
 import { initialHackathons } from '../data';
 
@@ -77,38 +77,43 @@ export const Hackathons: React.FC = () => {
 
   useEffect(() => {
     const init = async () => {
-      const res = await axios.get('/api/hackathons');
-      const dbList = res.data;
-      setAppliedList(dbList);
-      
-      const discoverRes = await axios.get('/api/discover/hackathons');
-      const apiDiscoverList = discoverRes.data.map((h: any) => ({
-        id: h.id.toString(),
-        title: h.title,
-        host: h.host,
-        platform: h.platform,
-        description: h.description,
-        fee: 0,
-        teamSize: "Any",
-        registeredCount: 0,
-        locationText: h.mode || "Online",
-        aboutText: h.description,
-        tracks: [],
-        benefits: [],
-        isApplied: dbList.some((item: any) => item.name === h.title),
-        tags: h.tags || [],
-        mode: h.mode || "Online",
-        scale: h.scale || "Global",
-        registrationDeadline: h.registration_deadline || "",
-        date: h.date || "",
-        url: h.url || "",
-        timeline: [
-          { stageName: "Registration", status: "Pending", details: "Complete registration on platform." },
-          { stageName: "Idea Submission", status: "Pending", deadline: h.registration_deadline, details: "Submit your solution." }
-        ]
-      }));
-      setDiscoverList(apiDiscoverList as any);
-      setLoading(false);
+      try {
+        const res = await axios.get('/api/hackathons');
+        const dbList = res.data;
+        setAppliedList(dbList);
+        
+        const discoverRes = await axios.get('/api/discover/hackathons');
+        const apiDiscoverList = discoverRes.data.map((h: any) => ({
+          id: h.id.toString(),
+          title: h.title,
+          host: h.host,
+          platform: h.platform,
+          description: h.description,
+          fee: 0,
+          teamSize: "Any",
+          registeredCount: 0,
+          locationText: h.mode || "Online",
+          aboutText: h.description,
+          tracks: [],
+          benefits: [],
+          isApplied: dbList.some((item: any) => item.name === h.title),
+          tags: h.tags || [],
+          mode: h.mode || "Online",
+          scale: h.scale || "Global",
+          registrationDeadline: h.registration_deadline || "",
+          date: h.date || "",
+          url: h.url || "",
+          timeline: [
+            { stageName: "Registration", status: "Pending", details: "Complete registration on platform." },
+            { stageName: "Idea Submission", status: "Pending", deadline: h.registration_deadline, details: "Submit your solution." }
+          ]
+        }));
+        setDiscoverList(apiDiscoverList as any);
+      } catch (err) {
+        console.error("Failed to load hackathons", err);
+      } finally {
+        setLoading(false);
+      }
     };
     init();
   }, []);
@@ -295,8 +300,14 @@ export const Hackathons: React.FC = () => {
           </div>
 
           {/* Catalog Cards List */}
-          <div className="space-y-4 max-h-[60vh] overflow-y-auto pr-1">
-            {filteredDiscoverList.filter(i => !i.isApplied).map(item => (
+          {loading ? (
+            <div className="flex flex-col items-center justify-center py-20 opacity-70">
+              <Loader className="h-8 w-8 text-brand-cyan animate-spin mb-4" />
+              <p className="text-xs text-slate-400 font-bold uppercase tracking-widest">Scanning Competitions...</p>
+            </div>
+          ) : (
+            <div className="space-y-4 max-h-[60vh] overflow-y-auto pr-1">
+              {filteredDiscoverList.filter(i => !i.isApplied).map(item => (
               <div 
                 key={item.id} 
                 onClick={() => setDetailOp(item)}
@@ -340,6 +351,7 @@ export const Hackathons: React.FC = () => {
               </div>
             )}
           </div>
+        )}
         </div>
 
         {/* RIGHT COLUMN: Active Registrations & Timelines */}

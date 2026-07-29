@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
-import { GraduationCap, Plus, Calendar, Clock, Search, ShieldCheck, Sparkles } from 'lucide-react';
+import { GraduationCap, Plus, Calendar, Clock, Search, ShieldCheck, Sparkles, Loader } from 'lucide-react';
 import { useAuth } from '../context/AuthContext';
 import Timeline from '../components/Timeline';
 import { initialScholarships } from '../data';
@@ -99,41 +99,46 @@ export const Scholarships: React.FC = () => {
 
   useEffect(() => {
     const init = async () => {
-      const res = await axios.get('/api/scholarships');
-      const dbList = res.data;
-      setAppliedList(dbList);
-      
-      const discoverRes = await axios.get('/api/discover/scholarships');
-      const apiDiscoverList = discoverRes.data.map((s: any) => ({
-        id: s.id.toString(),
-        name: s.name,
-        provider: s.provider,
-        platform: "Web",
-        description: s.description,
-        fee: 0,
-        teamSize: "Solo",
-        registeredCount: 0,
-        locationText: "Global",
-        aboutText: s.description,
-        amount: s.amount || "Varies",
-        deadline: s.deadline || "Rolling",
-        isApplied: dbList.some((item: any) => item.name === s.name),
-        url: s.url || "",
-        eligibility: {
-          categories: ["General", "OBC", "SC", "ST", "Minority", "EWS"],
-          incomeLimit: 1000000,
-          states: ["All"],
-          genders: ["All"],
-          degrees: ["All"],
-          years: ["All"]
-        },
-        timeline: [
-          { stageName: "Application Submission", status: "Pending", details: "Complete your document submissions." },
-          { stageName: "Document Verification", status: "Pending", deadline: s.deadline, details: "Wait for provider to verify documents." }
-        ]
-      }));
-      setDiscoverList(apiDiscoverList as any);
-      setLoading(false);
+      try {
+        const res = await axios.get('/api/scholarships');
+        const dbList = res.data;
+        setAppliedList(dbList);
+        
+        const discoverRes = await axios.get('/api/discover/scholarships');
+        const apiDiscoverList = discoverRes.data.map((s: any) => ({
+          id: s.id.toString(),
+          name: s.name,
+          provider: s.provider,
+          platform: "Web",
+          description: s.description,
+          fee: 0,
+          teamSize: "Solo",
+          registeredCount: 0,
+          locationText: "Global",
+          aboutText: s.description,
+          amount: s.amount || "Varies",
+          deadline: s.deadline || "Rolling",
+          isApplied: dbList.some((item: any) => item.name === s.name),
+          url: s.url || "",
+          eligibility: {
+            categories: ["General", "OBC", "SC", "ST", "Minority", "EWS"],
+            incomeLimit: 1000000,
+            states: ["All"],
+            genders: ["All"],
+            degrees: ["All"],
+            years: ["All"]
+          },
+          timeline: [
+            { stageName: "Application Submission", status: "Pending", details: "Complete your document submissions." },
+            { stageName: "Document Verification", status: "Pending", deadline: s.deadline, details: "Wait for provider to verify documents." }
+          ]
+        }));
+        setDiscoverList(apiDiscoverList as any);
+      } catch (err) {
+        console.error("Failed to load scholarships", err);
+      } finally {
+        setLoading(false);
+      }
     };
     init();
   }, []);
@@ -392,8 +397,14 @@ export const Scholarships: React.FC = () => {
             </span>
           </div>
 
-          <div className="space-y-4 max-h-[70vh] overflow-y-auto pr-1">
-            {eligibleDiscoverList.filter(s => !s.isApplied).map(item => (
+          {loading ? (
+            <div className="flex flex-col items-center justify-center py-20 opacity-70">
+              <Loader className="h-8 w-8 text-brand-cyan animate-spin mb-4" />
+              <p className="text-xs text-slate-400 font-bold uppercase tracking-widest">Scanning Scholarships...</p>
+            </div>
+          ) : (
+            <div className="space-y-4 max-h-[70vh] overflow-y-auto pr-1">
+              {eligibleDiscoverList.filter(s => !s.isApplied).map(item => (
               <div 
                 key={item.id} 
                 onClick={() => setDetailOp(item)}
@@ -424,12 +435,13 @@ export const Scholarships: React.FC = () => {
                 </div>
               </div>
             ))}
-            {eligibleDiscoverList.filter(s => !s.isApplied).length === 0 && (
-              <div className="text-center py-12 text-slate-500 italic text-xs border border-white/5 rounded-2xl bg-white/5">
-                No eligible scholarship programs found matching your current survey options.
-              </div>
-            )}
-          </div>
+              {eligibleDiscoverList.filter(s => !s.isApplied).length === 0 && (
+                <div className="text-center py-12 text-slate-500 italic text-xs border border-white/5 rounded-2xl bg-white/5">
+                  No eligible scholarship programs found matching your current survey options.
+                </div>
+              )}
+            </div>
+          )}
         </div>
 
         {/* RIGHT COLUMN: Active Database Applications & Timeline */}

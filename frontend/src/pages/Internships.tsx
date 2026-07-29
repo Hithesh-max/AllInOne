@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
-import { Briefcase, Calendar, Plus, Clock, Search, ShieldCheck } from 'lucide-react';
+import { Briefcase, Calendar, Plus, Clock, Search, ShieldCheck, Loader } from 'lucide-react';
 import Timeline from '../components/Timeline';
 import { initialInternships } from '../data';
 
@@ -76,36 +76,41 @@ export const Internships: React.FC = () => {
 
   useEffect(() => {
     const init = async () => {
-      const res = await axios.get('/api/internships');
-      const dbList = res.data;
-      setAppliedList(dbList);
-      
-      const discoverRes = await axios.get('/api/discover/internships');
-      const apiDiscoverList = discoverRes.data.map((i: any) => ({
-        id: i.id.toString(),
-        company: i.company,
-        role: i.role,
-        platform: "LinkedIn / Web",
-        description: i.description,
-        fee: 0,
-        teamSize: "Solo",
-        registeredCount: 0,
-        locationText: i.location || "Remote",
-        aboutText: i.description,
-        stipend: i.stipend || "Competitive",
-        stipendValue: 0,
-        location: i.location || "Remote",
-        field: "Software",
-        deadline: i.deadline || "Rolling",
-        isApplied: dbList.some((item: any) => item.role === i.role && item.company === i.company),
-        url: i.url || "",
-        timeline: [
-          { stageName: "Application Submission", status: "Pending", details: "Submit your resume on the platform." },
-          { stageName: "OA / Interview Stages", status: "Pending", deadline: i.deadline, details: "Prepare for core DSA rounds." }
-        ]
-      }));
-      setDiscoverList(apiDiscoverList as any);
-      setLoading(false);
+      try {
+        const res = await axios.get('/api/internships');
+        const dbList = res.data;
+        setAppliedList(dbList);
+        
+        const discoverRes = await axios.get('/api/discover/internships');
+        const apiDiscoverList = discoverRes.data.map((i: any) => ({
+          id: i.id.toString(),
+          company: i.company,
+          role: i.role,
+          platform: "LinkedIn / Web",
+          description: i.description,
+          fee: 0,
+          teamSize: "Solo",
+          registeredCount: 0,
+          locationText: i.location || "Remote",
+          aboutText: i.description,
+          stipend: i.stipend || "Competitive",
+          stipendValue: 0,
+          location: i.location || "Remote",
+          field: "Software",
+          deadline: i.deadline || "Rolling",
+          isApplied: dbList.some((item: any) => item.role === i.role && item.company === i.company),
+          url: i.url || "",
+          timeline: [
+            { stageName: "Application Submission", status: "Pending", details: "Submit your resume on the platform." },
+            { stageName: "OA / Interview Stages", status: "Pending", deadline: i.deadline, details: "Prepare for core DSA rounds." }
+          ]
+        }));
+        setDiscoverList(apiDiscoverList as any);
+      } catch (err) {
+        console.error("Failed to load internships", err);
+      } finally {
+        setLoading(false);
+      }
     };
     init();
   }, []);
@@ -301,9 +306,15 @@ export const Internships: React.FC = () => {
             </div>
           </div>
 
-          {/* Opportunities Cards List */}
-          <div className="space-y-4 max-h-[60vh] overflow-y-auto pr-1">
-            {filteredDiscoverList.filter(i => !i.isApplied).map(item => (
+            {/* Catalog Cards List */}
+            {loading ? (
+              <div className="flex flex-col items-center justify-center py-20 opacity-70">
+                <Loader className="h-8 w-8 text-brand-cyan animate-spin mb-4" />
+                <p className="text-xs text-slate-400 font-bold uppercase tracking-widest">Scanning Opportunities...</p>
+              </div>
+            ) : (
+              <div className="space-y-4 max-h-[60vh] overflow-y-auto pr-1">
+                {filteredDiscoverList.filter(i => !i.isApplied).map(item => (
               <div 
                 key={item.id} 
                 onClick={() => setDetailOp(item)}
@@ -340,14 +351,15 @@ export const Internships: React.FC = () => {
                   </button>
                 </div>
               </div>
-            ))}
-            {filteredDiscoverList.filter(i => !i.isApplied).length === 0 && (
-              <div className="text-center py-12 text-slate-500 italic text-sm border border-white/5 rounded-2xl bg-white/5">
-                No matching open careers cataloged. Try resetting filters.
+                ))}
+                {filteredDiscoverList.filter(i => !i.isApplied).length === 0 && (
+                  <div className="text-center py-12 text-slate-500 italic text-sm border border-white/5 rounded-2xl bg-white/5">
+                    No matching internships found. Try adjusting your filters.
+                  </div>
+                )}
               </div>
             )}
           </div>
-        </div>
 
         {/* RIGHT COLUMN: Active Pipelines & Timelines */}
         <div className="space-y-6">
