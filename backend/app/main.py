@@ -38,6 +38,7 @@ Base.metadata.create_all(bind=engine)
 
 import asyncio
 from contextlib import asynccontextmanager
+from app.services.email_service import send_deadline_email
 
 @asynccontextmanager
 async def lifespan(app: FastAPI):
@@ -74,21 +75,36 @@ async def lifespan(app: FastAPI):
                         for item in internships:
                             existing = db.query(Notification).filter(Notification.user_id == item.user_id, Notification.title.contains(item.company)).first()
                             if not existing:
-                                db.add(Notification(user_id=item.user_id, title=f"Deadline Alert: {item.company}", message=f"Your application for {item.role} at {item.company} is due tomorrow!"))
+                                title = f"Deadline Alert: {item.company}"
+                                msg = f"Your application for {item.role} at {item.company} is due tomorrow!"
+                                db.add(Notification(user_id=item.user_id, title=title, message=msg))
+                                user = db.query(User).filter(User.id == item.user_id).first()
+                                if user and user.email:
+                                    send_deadline_email(user.email, title, msg)
                         
                         # Check hackathons
                         hackathons = db.query(HackathonRegistration).filter(HackathonRegistration.date == str(tomorrow)).all()
                         for item in hackathons:
                             existing = db.query(Notification).filter(Notification.user_id == item.user_id, Notification.title.contains(item.name)).first()
                             if not existing:
-                                db.add(Notification(user_id=item.user_id, title=f"Deadline Alert: {item.name}", message=f"Your hackathon {item.name} is starting/due tomorrow!"))
+                                title = f"Deadline Alert: {item.name}"
+                                msg = f"Your hackathon {item.name} is starting/due tomorrow!"
+                                db.add(Notification(user_id=item.user_id, title=title, message=msg))
+                                user = db.query(User).filter(User.id == item.user_id).first()
+                                if user and user.email:
+                                    send_deadline_email(user.email, title, msg)
                         
                         # Check scholarships
                         scholarships = db.query(ScholarshipApplication).filter(ScholarshipApplication.deadline == tomorrow).all()
                         for item in scholarships:
                             existing = db.query(Notification).filter(Notification.user_id == item.user_id, Notification.title.contains(item.name)).first()
                             if not existing:
-                                db.add(Notification(user_id=item.user_id, title=f"Deadline Alert: {item.name}", message=f"Your scholarship application for {item.name} is due tomorrow!"))
+                                title = f"Deadline Alert: {item.name}"
+                                msg = f"Your scholarship application for {item.name} is due tomorrow!"
+                                db.add(Notification(user_id=item.user_id, title=title, message=msg))
+                                user = db.query(User).filter(User.id == item.user_id).first()
+                                if user and user.email:
+                                    send_deadline_email(user.email, title, msg)
                         
                         db.commit()
                     finally:
