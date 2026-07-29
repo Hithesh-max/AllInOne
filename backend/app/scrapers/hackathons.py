@@ -7,7 +7,7 @@ import re
 
 def scrape_hackathons():
     print("Starting Hackathon News RSS fetch...")
-    url = "https://news.google.com/rss/search?q=hackathon+registration+open&hl=en-US&gl=US&ceid=US:en"
+    url = "https://news.google.com/rss/search?q=hackathon+when:7d&hl=en-US&gl=US&ceid=US:en"
     try:
         response = requests.get(url, timeout=10)
         if response.status_code == 200:
