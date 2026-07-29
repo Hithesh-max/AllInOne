@@ -522,6 +522,42 @@ def get_global_hackathons(db: Session = Depends(get_db)):
 def get_global_scholarships(db: Session = Depends(get_db)):
     return db.query(GlobalScholarship).all()
 
+@app.get("/api/search")
+def search_global_opportunities(q: str = "", category: str = "all", db: Session = Depends(get_db)):
+    results = []
+    q_lower = f"%{q.lower()}%" if q else "%"
+    
+    if category in ["all", "internships"]:
+        internships = db.query(GlobalInternship).filter(
+            (GlobalInternship.role.ilike(q_lower)) | (GlobalInternship.company.ilike(q_lower))
+        ).all()
+        for i in internships:
+            results.append({"type": "internship", "id": i.id, "title": i.role, "company": i.company, "url": i.url, "date": i.deadline})
+            
+    if category in ["all", "jobs"]:
+        jobs = db.query(GlobalJob).filter(
+            (GlobalJob.title.ilike(q_lower)) | (GlobalJob.company.ilike(q_lower))
+        ).all()
+        for j in jobs:
+            results.append({"type": "job", "id": j.id, "title": j.title, "company": j.company, "url": j.url, "date": j.posted_date})
+            
+    if category in ["all", "hackathons"]:
+        hackathons = db.query(GlobalHackathon).filter(
+            (GlobalHackathon.title.ilike(q_lower)) | (GlobalHackathon.host.ilike(q_lower))
+        ).all()
+        for h in hackathons:
+            results.append({"type": "hackathon", "id": h.id, "title": h.title, "company": h.host, "url": h.url, "date": h.date})
+            
+    if category in ["all", "scholarships"]:
+        scholarships = db.query(GlobalScholarship).filter(
+            (GlobalScholarship.name.ilike(q_lower)) | (GlobalScholarship.provider.ilike(q_lower))
+        ).all()
+        for s in scholarships:
+            results.append({"type": "scholarship", "id": s.id, "title": s.name, "company": s.provider, "url": s.url, "date": s.deadline})
+            
+    return {"query": q, "count": len(results), "results": results}
+
+# === SCHEDULE & TODO ROUTERS ===
 @app.get("/api/discover/contests")
 def get_global_contests(db: Session = Depends(get_db)):
     return db.query(GlobalContest).all()
