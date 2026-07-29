@@ -1,17 +1,20 @@
 import requests
-import xml.etree.ElementTree as ET
 from sqlalchemy.orm import Session
 from app.database.connection import SessionLocal
 from app.database.models import GlobalHackathon
-import re
 
 def scrape_hackathons():
-    print("Starting Hackathon News RSS fetch...")
-    url = "https://news.google.com/rss/search?q=hackathon+when:7d&hl=en-US&gl=US&ceid=US:en"
+    print("Starting HackerEarth API fetch for Hackathons...")
+    url = "https://www.hackerearth.com/chrome-extension/events/"
     try:
-        response = requests.get(url, timeout=10)
+        # Use standard headers to avoid blocks
+        headers = {
+            "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.124 Safari/537.36"
+        }
+        response = requests.get(url, headers=headers, timeout=15)
         if response.status_code == 200:
-            root = ET.fromstring(response.content)
+            data = response.json()
+            events = data.get("response", [])
             
             db: Session = SessionLocal()
             try:
@@ -19,33 +22,33 @@ def scrape_hackathons():
                 db.commit()
                 
                 added = 0
-                for item in root.findall('.//item')[:30]:
-                    title = item.find('title').text if item.find('title') is not None else "Unknown"
-                    link = item.find('link').text if item.find('link') is not None else ""
-                    pub_date = item.find('pubDate').text if item.find('pubDate') is not None else ""
-                    
-                    # Clean title
-                    clean_title = title.split(' - ')[0] if ' - ' in title else title
-                    
-                    hackathon = GlobalHackathon(
-                        title=clean_title,
-                        host="Tech Event",
-                        platform="Web",
-                        description="View link for full details and registration.",
-                        registration_deadline=pub_date,
-                        date="Upcoming",
-                        url=link,
-                        mode="Online/Hybrid",
-                        scale="Global"
-                    )
-                    db.add(hackathon)
-                    added += 1
+                for item in events:
+                    if added >= 50:
+                        break
+                        
+                    # Filter for hackathons or upcoming/ongoing challenges
+                    status = item.get("status", "")
+                    if status in ["UPCOMING", "ONGOING"]:
+                        hackathon = GlobalHackathon(
+                            title=item.get("title", "")[:100],
+                            host="HackerEarth",
+                            platform="HackerEarth",
+                            description=item.get("description", "")[:200] + "...",
+                            registration_deadline=item.get("end_date", ""),
+                            date=item.get("date", ""),
+                            url=item.get("url", ""),
+                            mode="Online",
+                            scale="Global"
+                        )
+                        db.add(hackathon)
+                        added += 1
+                        
                 db.commit()
-                print(f"Hackathons fetch complete. Added {added} hackathons.")
+                print(f"Hackathons fetch complete. Added {added} real hackathons.")
             finally:
                 db.close()
         else:
-            print(f"Failed to fetch Hackathons. Status code: {response.status_code}")
+            print(f"Failed to fetch Hackathons from HackerEarth. Status code: {response.status_code}")
     except Exception as e:
         print(f"Error fetching Hackathons: {e}")
 

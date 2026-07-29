@@ -239,3 +239,29 @@ class Notification(Base):
     created_at = Column(DateTime, default=datetime.datetime.utcnow)
 
     user = relationship("User", back_populates="notifications")
+
+
+class GlobalJob(Base):
+    __tablename__ = "global_jobs"
+
+    id = Column(Integer, primary_key=True, index=True)
+    title = Column(String, nullable=False, index=True)
+    company = Column(String, nullable=False, index=True)
+    location = Column(String, nullable=True)
+    job_type = Column(String, nullable=True) # Full-time, Remote, etc.
+    description = Column(Text, nullable=True)
+    url = Column(String, nullable=False, unique=True)
+    posted_date = Column(String, nullable=True)
+    created_at = Column(DateTime, default=datetime.datetime.utcnow)
+
+class GlobalNews(Base):
+    __tablename__ = "global_news"
+
+    id = Column(Integer, primary_key=True, index=True)
+    title = Column(String, nullable=False, index=True)
+    source = Column(String, nullable=True)
+    category = Column(String, nullable=True, index=True)
+    summary = Column(Text, nullable=True)
+    url = Column(String, nullable=False, unique=True)
+    published_at = Column(String, nullable=True)
+    created_at = Column(DateTime, default=datetime.datetime.utcnow)
