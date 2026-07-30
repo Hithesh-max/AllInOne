@@ -1086,11 +1086,11 @@ export const Landing: React.FC<LandingProps> = ({ onGetStarted }) => {
                 </div>
                 <div className="node-glow-cyan p-4 rounded-2xl bg-dark-800/80 border border-brand-cyan/30 flex items-center gap-4 hover:scale-105 transition-all duration-300">
                   <div className="p-2 bg-brand-cyan/10 text-brand-cyan rounded-xl border border-brand-cyan/20">
-                    <Wallet className="h-5 w-5" />
+                    <GraduationCap className="h-5 w-5" />
                   </div>
                   <div className="text-left">
-                    <h5 className="text-xs font-bold text-slate-100">Finance Node</h5>
-                    <span className="text-[9px] text-slate-500">Logs &amp; Spend Model</span>
+                    <h5 className="text-xs font-bold text-slate-100">Scholarship Node</h5>
+                    <span className="text-[9px] text-slate-500">NSP & Eligibility Match</span>
                   </div>
                 </div>
               </div>
