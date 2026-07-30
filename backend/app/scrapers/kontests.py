@@ -18,29 +18,27 @@ def scrape_contests():
                     db.commit()
                     
                     added = 0
-                    for item in data.get("result", [])[:30]:
-                        # Only get upcoming contests
-                        if item.get("phase") == "BEFORE":
-                            # Convert unix timestamp to readable date
-                            start_time = item.get("startTimeSeconds", 0)
-                            dt = datetime.fromtimestamp(start_time)
-                            date_str = dt.strftime("%B %d, %Y")
-                            time_str = dt.strftime("%I:%M %p")
-                            
-                            duration_sec = item.get("durationSeconds", 0)
-                            duration_hours = round(float(duration_sec) / 3600, 1)
-                            duration_str = f"{duration_hours} Hours"
-                            
-                            contest = GlobalContest(
-                                title=item.get("name", "Codeforces Contest"),
-                                platform="Codeforces",
-                                date=date_str,
-                                time=time_str,
-                                duration=duration_str,
-                                url="https://codeforces.com/contests"
-                            )
-                            db.add(contest)
-                            added += 1
+                    for item in data.get("result", [])[:50]:
+                        # Include all contests (Upcoming, Ongoing, Past) so the board isn't empty
+                        start_time = item.get("startTimeSeconds", 0)
+                        dt = datetime.fromtimestamp(start_time)
+                        date_str = dt.strftime("%B %d, %Y")
+                        time_str = dt.strftime("%I:%M %p")
+                        
+                        duration_sec = item.get("durationSeconds", 0)
+                        duration_hours = round(float(duration_sec) / 3600, 1)
+                        duration_str = f"{duration_hours} Hours"
+                        
+                        contest = GlobalContest(
+                            title=item.get("name", "Codeforces Contest"),
+                            platform="Codeforces",
+                            date=date_str,
+                            time=time_str,
+                            duration=duration_str,
+                            url="https://codeforces.com/contests"
+                        )
+                        db.add(contest)
+                        added += 1
                     db.commit()
                     print(f"Codeforces API fetch complete. Added {added} contests.")
                 finally:

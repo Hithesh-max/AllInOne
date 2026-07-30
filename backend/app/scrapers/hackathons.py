@@ -26,11 +26,9 @@ def scrape_hackathons():
                     if added >= 50:
                         break
                         
-                    # Filter for hackathons or upcoming/ongoing challenges
-                    status = item.get("status", "")
-                    if status in ["UPCOMING", "ONGOING"]:
-                        hackathon = GlobalHackathon(
-                            title=item.get("title", "")[:100],
+                    # Include all hackathons (Upcoming, Ongoing, Closed) to fill the board
+                    hackathon = GlobalHackathon(
+                        title=item.get("title", "")[:100],
                             host="HackerEarth",
                             platform="HackerEarth",
                             description=item.get("description", "")[:200] + "...",
