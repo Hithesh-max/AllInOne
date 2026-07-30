@@ -47,7 +47,6 @@ async def lifespan(app: FastAPI):
     from app.scrapers.internships import scrape_internships
     from app.scrapers.scholarships import scrape_scholarships
     from app.scrapers.kontests import scrape_contests
-    from app.scrapers.news import scrape_news
 
     async def run_scrapers():
         while True:
@@ -56,7 +55,6 @@ async def lifespan(app: FastAPI):
                 await asyncio.to_thread(scrape_internships)
                 await asyncio.to_thread(scrape_scholarships)
                 await asyncio.to_thread(scrape_contests)
-                await asyncio.to_thread(scrape_news)
             except Exception as e:
                 print(f"Scraper error: {e}")
             await asyncio.sleep(43200) # 12 hours
@@ -520,14 +518,6 @@ def analyze_resume_endpoint(
 def get_global_internships(db: Session = Depends(get_db)):
     return db.query(GlobalInternship).all()
 
-@app.get("/api/discover/jobs")
-def get_global_jobs(db: Session = Depends(get_db)):
-    return db.query(GlobalJob).all()
-
-@app.get("/api/discover/news")
-def get_global_news(db: Session = Depends(get_db)):
-    return db.query(GlobalNews).all()
-
 @app.get("/api/discover/hackathons")
 def get_global_hackathons(db: Session = Depends(get_db)):
     return db.query(GlobalHackathon).all()
@@ -547,13 +537,6 @@ def search_global_opportunities(q: str = "", category: str = "all", db: Session 
         ).all()
         for i in internships:
             results.append({"type": "internship", "id": i.id, "title": i.role, "company": i.company, "url": i.url, "date": i.deadline})
-            
-    if category in ["all", "jobs"]:
-        jobs = db.query(GlobalJob).filter(
-            (GlobalJob.title.ilike(q_lower)) | (GlobalJob.company.ilike(q_lower))
-        ).all()
-        for j in jobs:
-            results.append({"type": "job", "id": j.id, "title": j.title, "company": j.company, "url": j.url, "date": j.posted_date})
             
     if category in ["all", "hackathons"]:
         hackathons = db.query(GlobalHackathon).filter(
