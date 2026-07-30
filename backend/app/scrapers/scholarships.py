@@ -6,7 +6,7 @@ import re
 
 def scrape_scholarships():
     print("Starting Google News RSS fetch for Scholarships...")
-    url = "https://news.google.com/rss/search?q=student+scholarships+apply+portal+when:30d&hl=en-US&gl=US&ceid=US:en"
+    url = "https://news.google.com/rss/search?q=scholarships+for+students+India+when:30d&hl=en-IN&gl=IN&ceid=IN:en"
     try:
         headers = {
             "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.124 Safari/537.36"
