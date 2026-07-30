@@ -29,17 +29,17 @@ def scrape_hackathons():
                     # Include all hackathons (Upcoming, Ongoing, Closed) to fill the board
                     hackathon = GlobalHackathon(
                         title=item.get("title", "")[:100],
-                            host="HackerEarth",
-                            platform="HackerEarth",
-                            description=item.get("description", "")[:200] + "...",
-                            registration_deadline=item.get("end_date", ""),
-                            date=item.get("date", ""),
-                            url=item.get("url", ""),
-                            mode="Online",
-                            scale="Global"
-                        )
-                        db.add(hackathon)
-                        added += 1
+                        host="HackerEarth",
+                        platform="HackerEarth",
+                        description=item.get("description", "")[:200] + "...",
+                        registration_deadline=item.get("end_date", ""),
+                        date=item.get("date", ""),
+                        url=item.get("url", ""),
+                        mode="Online",
+                        scale="Global"
+                    )
+                    db.add(hackathon)
+                    added += 1
                         
                 db.commit()
                 print(f"Hackathons fetch complete. Added {added} real hackathons.")
