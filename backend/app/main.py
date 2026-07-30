@@ -83,7 +83,7 @@ async def lifespan(app: FastAPI):
                                     send_deadline_email(user.email, title, msg)
                         
                         # Check hackathons
-                        hackathons = db.query(HackathonRegistration).filter(HackathonRegistration.date == str(tomorrow)).all()
+                        hackathons = db.query(HackathonRegistration).filter(HackathonRegistration.dates == str(tomorrow)).all()
                         for item in hackathons:
                             existing = db.query(Notification).filter(Notification.user_id == item.user_id, Notification.title.contains(item.name)).first()
                             if not existing:
