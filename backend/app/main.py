@@ -47,6 +47,7 @@ async def lifespan(app: FastAPI):
     from app.scrapers.internships import scrape_internships
     from app.scrapers.scholarships import scrape_scholarships
     from app.scrapers.kontests import scrape_contests
+    from app.scrapers.news import scrape_news
 
     async def run_scrapers():
         while True:
@@ -55,6 +56,7 @@ async def lifespan(app: FastAPI):
                 await asyncio.to_thread(scrape_internships)
                 await asyncio.to_thread(scrape_scholarships)
                 await asyncio.to_thread(scrape_contests)
+                await asyncio.to_thread(scrape_news)
             except Exception as e:
                 print(f"Scraper error: {e}")
             await asyncio.sleep(43200) # 12 hours

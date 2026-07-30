@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { useAuth } from '../context/AuthContext';
-import { Terminal, KeyRound, Mail, User, ShieldAlert } from 'lucide-react';
+import { TerminalIcon, KeyRound, Mail, User, ShieldAlert } from 'lucide-react';
 
 export const Auth: React.FC<{ onBackToLanding?: () => void }> = ({ onBackToLanding }) => {
   const { login, signup } = useAuth();
@@ -41,7 +41,7 @@ export const Auth: React.FC<{ onBackToLanding?: () => void }> = ({ onBackToLandi
         {/* Logo */}
         <div className="flex flex-col items-center mb-8">
           <div className="h-12 w-12 rounded-2xl bg-gradient-to-tr from-brand-violet to-brand-cyan flex items-center justify-center shadow-neon mb-3">
-            <Terminal className="h-6 w-6 text-white" />
+            <TerminalIcon className="h-6 w-6 text-white" />
           </div>
           <h1 className="font-extrabold text-2xl tracking-wide text-transparent bg-clip-text bg-gradient-to-r from-brand-neon to-brand-cyan">
             CampusCopilot AI

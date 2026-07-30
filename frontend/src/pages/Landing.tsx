@@ -1,6 +1,6 @@
 import React from 'react';
 import { 
-  Terminal, ArrowRight, Brain, Briefcase, Award, GraduationCap, 
+  TerminalIcon, ArrowRight, Brain, Briefcase, Award, GraduationCap, 
   FileText, Wallet, Heart, Compass, Shield, Activity, Calendar, 
   TrendingUp, ChevronDown, Sparkles 
 } from 'lucide-react';
@@ -498,7 +498,7 @@ export const Landing: React.FC<LandingProps> = ({ onGetStarted }) => {
         </div>
         <div className="loader-logo flex flex-col items-center gap-4 z-10">
           <div className="h-14 w-14 rounded-2xl bg-gradient-to-tr from-brand-violet to-brand-cyan flex items-center justify-center shadow-neon animate-pulse">
-            <Terminal className="h-7 w-7 text-white" />
+            <TerminalIcon className="h-7 w-7 text-white" />
           </div>
           <h1 className="font-extrabold text-xl tracking-wide text-slate-100 uppercase font-mono">CampusCopilot</h1>
           <div className="w-48 h-[3px] bg-white/5 rounded-full overflow-hidden mt-6 border border-white/5">
@@ -553,7 +553,7 @@ export const Landing: React.FC<LandingProps> = ({ onGetStarted }) => {
       <header className="max-w-7xl mx-auto w-full px-8 h-20 flex items-center justify-between z-20 relative border-b border-white/5 bg-[#06040b]/40 backdrop-blur-md">
         <div className="flex items-center gap-3">
           <div className="h-10 w-10 rounded-xl bg-gradient-to-tr from-brand-violet to-brand-cyan flex items-center justify-center shadow-neon hover:scale-105 transition-all duration-300">
-            <Terminal className="h-5 w-5 text-white" />
+            <TerminalIcon className="h-5 w-5 text-white" />
           </div>
           <div>
             <h1 className="font-bold text-sm leading-none tracking-wide text-slate-100">CampusCopilot AI</h1>
@@ -584,14 +584,14 @@ export const Landing: React.FC<LandingProps> = ({ onGetStarted }) => {
               <div className="h-3 w-3 rounded-full bg-amber-500/80" />
               <div className="h-3 w-3 rounded-full bg-emerald-500/80" />
               <span className="ml-3 text-slate-400 font-mono flex items-center gap-1.5">
-                <Terminal className="h-3 w-3 text-brand-cyan" /> ● Landing.tsx - CampusCopilot IDE
+                <TerminalIcon className="h-3 w-3 text-brand-cyan" /> ● Landing.tsx - CampusCopilot IDE
               </span>
             </div>
             <div className="flex items-center gap-4 font-mono text-[10px] hidden sm:flex">
               <span>File</span>
               <span>Edit</span>
               <span>Selection</span>
-              <span>Terminal</span>
+              <span>TerminalIcon</span>
               <span className="text-brand-cyan font-semibold">v1.3.0-live</span>
             </div>
           </div>
@@ -599,7 +599,7 @@ export const Landing: React.FC<LandingProps> = ({ onGetStarted }) => {
           <div className="flex flex-1 min-h-[500px]">
             {/* Left Activity Bar */}
             <div className="w-12 bg-[#050308] border-r border-white/5 flex flex-col items-center py-4 gap-6 text-slate-500 select-none">
-              <Terminal className="h-5 w-5 text-brand-cyan" />
+              <TerminalIcon className="h-5 w-5 text-brand-cyan" />
               <Brain className="h-5 w-5 hover:text-slate-300 cursor-pointer" />
               <Briefcase className="h-5 w-5 hover:text-slate-300 cursor-pointer" />
               <Wallet className="h-5 w-5 hover:text-slate-300 cursor-pointer" />
@@ -700,10 +700,10 @@ export const Landing: React.FC<LandingProps> = ({ onGetStarted }) => {
             </div>
           </div>
 
-          {/* Terminal Console footer panel */}
+          {/* TerminalIcon Console footer panel */}
           <div className="bg-[#050308] border-t border-white/5 p-4 text-left font-mono text-[10px] text-slate-500 select-none">
             <div className="flex gap-4 border-b border-white/5 pb-2 mb-2 font-bold uppercase tracking-wider text-slate-400">
-              <span className="text-brand-cyan">Terminal</span>
+              <span className="text-brand-cyan">TerminalIcon</span>
               <span>Problems</span>
               <span>Output</span>
               <span>Debug Console</span>
@@ -1293,11 +1293,11 @@ export const Landing: React.FC<LandingProps> = ({ onGetStarted }) => {
               <React.Fragment key={rIdx}>
                 <div className="inline-flex gap-6 select-none font-mono">
                   <div className="px-6 py-5 rounded-2xl bg-dark-800/60 border border-white/5 flex items-center gap-4 hover:border-brand-purple/30 transition-all min-w-[280px]">
-                    <div className="p-2.5 bg-brand-purple/10 text-brand-purple rounded-xl border border-brand-purple/20"><Terminal className="h-5 w-5" /></div>
+                    <div className="p-2.5 bg-brand-purple/10 text-brand-purple rounded-xl border border-brand-purple/20"><TerminalIcon className="h-5 w-5" /></div>
                     <div className="text-left"><h5 className="text-xs font-bold text-slate-200">LeetCode Weekly 384</h5><span className="text-[10px] text-slate-400">CP contest · 90 mins</span></div>
                   </div>
                   <div className="px-6 py-5 rounded-2xl bg-dark-800/60 border border-white/5 flex items-center gap-4 hover:border-brand-purple/30 transition-all min-w-[280px]">
-                    <div className="p-2.5 bg-brand-purple/10 text-brand-purple rounded-xl border border-brand-purple/20"><Terminal className="h-5 w-5" /></div>
+                    <div className="p-2.5 bg-brand-purple/10 text-brand-purple rounded-xl border border-brand-purple/20"><TerminalIcon className="h-5 w-5" /></div>
                     <div className="text-left"><h5 className="text-xs font-bold text-slate-200">Codeforces Div.2 Round</h5><span className="text-[10px] text-slate-400">Competitive · 2 hours</span></div>
                   </div>
                   <div className="px-6 py-5 rounded-2xl bg-dark-800/60 border border-white/5 flex items-center gap-4 hover:border-brand-purple/30 transition-all min-w-[280px]">

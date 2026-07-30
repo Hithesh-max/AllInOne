@@ -2,7 +2,7 @@ import React from 'react';
 import { 
   LayoutDashboard, MessageSquare, BookOpen, Briefcase, Award, 
   GraduationCap, FileText, Wallet, ShoppingCart, Heart, 
-  Compass, Calendar, User, LogOut, Terminal, Globe
+  Compass, Calendar, User, LogOut, TerminalIcon, Globe
 } from 'lucide-react';
 import { useAuth } from '../context/AuthContext';
 
@@ -26,7 +26,7 @@ export const Sidebar: React.FC<SidebarProps> = ({ currentView, setView }) => {
     { id: 'internships', label: 'Internships', icon: Briefcase },
     { id: 'hackathons', label: 'Hackathons', icon: Award },
     { id: 'scholarships', label: 'Scholarships', icon: GraduationCap },
-    { id: 'contests', label: 'Coding Contests', icon: Terminal },
+    { id: 'contests', label: 'Coding Contests', icon: TerminalIcon },
     { id: 'resume', label: 'ATS Resume Review', icon: FileText },
     { id: 'calendar', label: 'Calendar Events', icon: Calendar },
     { id: 'news', label: 'Tech News Hub', icon: Globe },
@@ -39,7 +39,7 @@ export const Sidebar: React.FC<SidebarProps> = ({ currentView, setView }) => {
         {/* App Logo */}
         <div className="flex items-center gap-3 px-6 mb-6 cursor-pointer" onClick={() => setView('home')}>
           <div className="h-10 w-10 rounded-xl bg-gradient-to-tr from-brand-violet to-brand-cyan flex items-center justify-center shadow-neon">
-            <Terminal className="h-5 w-5 text-white" />
+            <TerminalIcon className="h-5 w-5 text-white" />
           </div>
           <div>
             <h1 className="font-bold text-lg leading-none tracking-wide text-transparent bg-clip-text bg-gradient-to-r from-brand-neon to-brand-cyan">CampusCopilot</h1>
