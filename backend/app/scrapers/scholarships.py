@@ -1,13 +1,12 @@
 import requests
-import xml.etree.ElementTree as ET
 from sqlalchemy.orm import Session
 from app.database.connection import SessionLocal
 from app.database.models import GlobalScholarship
 import re
 
 def scrape_scholarships():
-    print("Starting Youthop RSS fetch for Scholarships...")
-    url = "https://www.youthop.com/scholarships/feed"
+    print("Starting Google News RSS fetch for Scholarships...")
+    url = "https://news.google.com/rss/search?q=student+scholarships+apply+portal+when:30d&hl=en-US&gl=US&ceid=US:en"
     try:
         headers = {
             "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.124 Safari/537.36"
@@ -23,27 +22,26 @@ def scrape_scholarships():
                 
                 added = 0
                 items = re.findall(r'<item>(.*?)</item>', content, re.DOTALL)
-                for item in items[:30]:
+                for item in items[:50]:
                     t_match = re.search(r'<title>(.*?)</title>', item, re.DOTALL)
-                    title = t_match.group(1).replace('<![CDATA[', '').replace(']]>', '') if t_match else "Unknown Scholarship"
+                    title = t_match.group(1).replace('<![CDATA[', '').replace(']]>', '') if t_match else "Upcoming Scholarship"
                     
                     l_match = re.search(r'<link>(.*?)</link>', item, re.DOTALL)
                     link = l_match.group(1).strip() if l_match else ""
                     
-                    d_match = re.search(r'<description><!\[CDATA\[(.*?)\]\]></description>', item, re.DOTALL)
-                    if not d_match:
-                        d_match = re.search(r'<description>(.*?)</description>', item, re.DOTALL)
-                    description = d_match.group(1) if d_match else ""
+                    d_match = re.search(r'<pubDate>(.*?)</pubDate>', item, re.DOTALL)
+                    date = d_match.group(1).strip() if d_match else "Rolling"
                     
-                    clean_desc = re.sub('<[^<]+?>', '', description)[:200] + "..."
+                    source_match = re.search(r'<source.*?>(.*?)</source>', item, re.DOTALL)
+                    source = source_match.group(1).strip() if source_match else "Global Scholarships"
                     
                     scholarship = GlobalScholarship(
                         name=title[:100],
-                        provider="Youthop Opportunities",
-                        amount="Varies",
-                        deadline="Check link for deadline",
+                        provider=source[:100],
+                        amount="Varies based on eligibility",
+                        deadline=date,
                         url=link,
-                        description=clean_desc
+                        description=f"Check the official portal for {title}. Latest updates via {source}."
                     )
                     db.add(scholarship)
                     added += 1

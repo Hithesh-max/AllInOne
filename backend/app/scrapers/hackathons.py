@@ -2,19 +2,18 @@ import requests
 from sqlalchemy.orm import Session
 from app.database.connection import SessionLocal
 from app.database.models import GlobalHackathon
+import re
 
 def scrape_hackathons():
-    print("Starting HackerEarth API fetch for Hackathons...")
-    url = "https://www.hackerearth.com/chrome-extension/events/"
+    print("Starting Google News RSS fetch for Hackathons...")
+    url = "https://news.google.com/rss/search?q=hackathon+OR+hackathons+when:30d&hl=en-US&gl=US&ceid=US:en"
     try:
-        # Use standard headers to avoid blocks
         headers = {
             "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.124 Safari/537.36"
         }
         response = requests.get(url, headers=headers, timeout=15)
         if response.status_code == 200:
-            data = response.json()
-            events = data.get("response", [])
+            content = response.text
             
             db: Session = SessionLocal()
             try:
@@ -22,20 +21,29 @@ def scrape_hackathons():
                 db.commit()
                 
                 added = 0
-                for item in events:
-                    if added >= 50:
-                        break
-                        
-                    # Include all hackathons (Upcoming, Ongoing, Closed) to fill the board
+                items = re.findall(r'<item>(.*?)</item>', content, re.DOTALL)
+                for item in items[:50]:
+                    t_match = re.search(r'<title>(.*?)</title>', item, re.DOTALL)
+                    title = t_match.group(1).replace('<![CDATA[', '').replace(']]>', '') if t_match else "Upcoming Hackathon"
+                    
+                    l_match = re.search(r'<link>(.*?)</link>', item, re.DOTALL)
+                    link = l_match.group(1).strip() if l_match else ""
+                    
+                    d_match = re.search(r'<pubDate>(.*?)</pubDate>', item, re.DOTALL)
+                    date = d_match.group(1).strip() if d_match else "Upcoming"
+                    
+                    source_match = re.search(r'<source.*?>(.*?)</source>', item, re.DOTALL)
+                    source = source_match.group(1).strip() if source_match else "Global Hub"
+                    
                     hackathon = GlobalHackathon(
-                        title=item.get("title", "")[:100],
-                        host="HackerEarth",
-                        platform="HackerEarth",
-                        description=item.get("description", "")[:200] + "...",
-                        registration_deadline=item.get("end_date", ""),
-                        date=item.get("date", ""),
-                        url=item.get("url", ""),
-                        mode="Online",
+                        title=title[:100],
+                        host=source[:100],
+                        platform="Global Hub",
+                        description=f"Join the latest hackathon event reported by {source}. Check the link for registration and details.",
+                        registration_deadline=date,
+                        date=date,
+                        url=link,
+                        mode="Online/Offline",
                         scale="Global"
                     )
                     db.add(hackathon)
@@ -46,7 +54,7 @@ def scrape_hackathons():
             finally:
                 db.close()
         else:
-            print(f"Failed to fetch Hackathons from HackerEarth. Status code: {response.status_code}")
+            print(f"Failed to fetch Hackathons. Status code: {response.status_code}")
     except Exception as e:
         print(f"Error fetching Hackathons: {e}")
 

@@ -2,10 +2,9 @@ import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { useAuth } from '../context/AuthContext';
 import { 
-  GraduationCap, Briefcase, Calendar, Wallet, 
-  ChevronRight, Activity, Zap, ShieldCheck
+  GraduationCap, Briefcase, Calendar, 
+  ChevronRight, Zap, ShieldCheck
 } from 'lucide-react';
-import { ResponsiveContainer, AreaChart, Area, XAxis, YAxis, Tooltip } from 'recharts';
 
 interface HomeProps {
   setView: (view: any) => void;
@@ -16,39 +15,24 @@ export const Home: React.FC<HomeProps> = ({ setView, onSetQuickPrompt }) => {
   const { profile, user } = useAuth();
   const [internshipCount, setInternshipCount] = useState(0);
   const [eventCount, setEventCount] = useState(0);
-  const [expenseTotal, setExpenseTotal] = useState(0);
   const [loading, setLoading] = useState(true);
 
   // Animated Count-Up values state
   const [displayCgpa, setDisplayCgpa] = useState(0);
   const [displayApplications, setDisplayApplications] = useState(0);
   const [displayEvents, setDisplayEvents] = useState(0);
-  const [displayExpenses, setDisplayExpenses] = useState(0);
 
-  // Financial Graph Data
-  const financialData = [
-    { name: 'Mon', expense: 120 },
-    { name: 'Tue', expense: 280 },
-    { name: 'Wed', expense: 80 },
-    { name: 'Thu', expense: 450 },
-    { name: 'Fri', expense: 200 },
-    { name: 'Sat', expense: 550 },
-    { name: 'Sun', expense: 150 },
-  ];
+
 
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const [interns, events, expenses] = await Promise.all([
+        const [interns, events] = await Promise.all([
           axios.get('/api/internships'),
-          axios.get('/api/calendar'),
-          axios.get('/api/expenses')
+          axios.get('/api/calendar')
         ]);
         setInternshipCount(interns.data.length);
         setEventCount(events.data.length);
-        
-        const total = expenses.data.reduce((sum: number, item: any) => sum + item.amount, 0);
-        setExpenseTotal(total);
       } catch (err) {
         console.error('Failed to load dashboard metrics', err);
       } finally {
@@ -83,8 +67,7 @@ export const Home: React.FC<HomeProps> = ({ setView, onSetQuickPrompt }) => {
     animateValue(0, targetCgpa, 800, setDisplayCgpa);
     animateValue(0, internshipCount, 800, setDisplayApplications);
     animateValue(0, eventCount, 800, setDisplayEvents);
-    animateValue(0, expenseTotal, 800, setDisplayExpenses);
-  }, [loading, profile?.cgpa, internshipCount, eventCount, expenseTotal]);
+  }, [loading, profile?.cgpa, internshipCount, eventCount]);
 
   const prompts = [
     'I need opportunities next month.',
@@ -164,17 +147,6 @@ export const Home: React.FC<HomeProps> = ({ setView, onSetQuickPrompt }) => {
             <p className="text-xl font-extrabold text-slate-200 mt-0.5">{Math.round(displayEvents)} Events</p>
           </div>
         </div>
-
-        {/* Expenses */}
-        <div className="glass-card p-6 border border-white/5 flex items-center gap-4 hover:border-emerald-500/20 transition-all">
-          <div className="h-11 w-11 rounded-xl bg-emerald-500/10 border border-emerald-500/20 flex items-center justify-center text-emerald-400">
-            <Wallet className="h-5 w-5" />
-          </div>
-          <div>
-            <span className="text-[10px] uppercase text-slate-400 tracking-wider font-bold">Total Expenses</span>
-            <p className="text-xl font-extrabold text-slate-200 mt-0.5">₹{displayExpenses.toFixed(2)}</p>
-          </div>
-        </div>
       </div>
 
       {/* Main Content Splitting */}
@@ -197,36 +169,6 @@ export const Home: React.FC<HomeProps> = ({ setView, onSetQuickPrompt }) => {
                   <ChevronRight className="h-3.5 w-3.5 text-slate-500 shrink-0 mt-0.5" />
                 </button>
               ))}
-            </div>
-          </div>
-
-          {/* Recharts Expenditure Progress */}
-          <div className="glass-card p-6 border border-white/5">
-            <h3 className="font-bold text-sm text-slate-200 mb-6 flex items-center gap-2">
-              <Activity className="h-4 w-4 text-brand-neon animate-pulse" /> Weekly Expenditure Analytics
-            </h3>
-            <div className="h-60 w-full text-xs">
-              <ResponsiveContainer width="100%" height="100%">
-                <AreaChart data={financialData}>
-                  <defs>
-                    <linearGradient id="colorExpense" x1="0" y1="0" x2="0" y2="1">
-                      <stop offset="5%" stopColor="#7c3aed" stopOpacity={0.4}/>
-                      <stop offset="95%" stopColor="#7c3aed" stopOpacity={0}/>
-                    </linearGradient>
-                  </defs>
-                  <XAxis dataKey="name" stroke="#64748b" />
-                  <YAxis stroke="#64748b" />
-                  <Tooltip 
-                    contentStyle={{ 
-                      backgroundColor: '#0b0b0f', 
-                      borderColor: 'rgba(255,255,255,0.08)',
-                      borderRadius: '12px',
-                      color: '#f8fafc' 
-                    }} 
-                  />
-                  <Area type="monotone" dataKey="expense" stroke="#a78bfa" strokeWidth={2} fillOpacity={1} fill="url(#colorExpense)" />
-                </AreaChart>
-              </ResponsiveContainer>
             </div>
           </div>
         </div>
