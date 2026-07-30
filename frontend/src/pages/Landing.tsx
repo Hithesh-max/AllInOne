@@ -110,10 +110,8 @@ export const Landing: React.FC<LandingProps> = ({ onGetStarted }) => {
     { name: 'Internship Matching', desc: 'Scrape opportunities, match resumes, estimate ATS scores, and generate prep guides.', icon: Briefcase, color: 'text-brand-cyan border-brand-cyan/20' },
     { name: 'Hackathon Scraper', desc: 'Track Devfolio/Devpost deadlines, verify eligibility, and structure team rules.', icon: Award, color: 'text-yellow-400 border-yellow-400/20' },
     { name: 'Scholarship Finder', desc: 'Scan post-matric portals and filter grants by CGPA, branches, and income limits.', icon: GraduationCap, color: 'text-emerald-400 border-emerald-400/20' },
-    { name: 'Resume Optimizer', desc: 'Review bullet points, suggest projects, missing keywords, and draft cover letters.', icon: FileText, color: 'text-pink-400 border-pink-400/20' },
-    { name: 'Hydration & Calorie Hub', desc: 'Track weights, log calorie intake, and generate high-protein meal blueprints.', icon: Heart, color: 'text-red-400 border-red-400/20' },
-    { name: 'Itinerary Travel Agent', desc: 'Draft day-by-day vacation maps, packing lists, weather alarms, and travel budgets.', icon: Compass, color: 'text-indigo-400 border-indigo-400/20' }
-  ];
+    { name: 'Resume Optimizer', desc: 'Review bullet points, suggest projects, missing keywords, and draft cover letters.', icon: FileText, color: 'text-pink-400 border-pink-400/20' }
+    ];
 
   const faqItems = [
     {
@@ -728,8 +726,6 @@ export const Landing: React.FC<LandingProps> = ({ onGetStarted }) => {
           <span>GET /api/contests/leetcode-384 200 OK</span>
           <span className="text-brand-cyan">·</span>
           <span>PUT /api/resume/ats-score 200 OK</span>
-          <span className="text-brand-cyan">·</span>
-          <span>GET /api/health/hydration-level 200 OK</span>
           <span className="text-brand-purple">·</span>
           
           {/* Duplicate for infinite loop */}
@@ -740,8 +736,6 @@ export const Landing: React.FC<LandingProps> = ({ onGetStarted }) => {
           <span>GET /api/contests/leetcode-384 200 OK</span>
           <span className="text-brand-cyan">·</span>
           <span>PUT /api/resume/ats-score 200 OK</span>
-          <span className="text-brand-cyan">·</span>
-          <span>GET /api/health/hydration-level 200 OK</span>
           <span className="text-brand-purple">·</span>
         </div>
       </section>
