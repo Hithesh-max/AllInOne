@@ -123,6 +123,7 @@ export const Scholarships: React.FC = () => {
         const dbList = res.data;
         setAppliedList(dbList);
         
+        const discoverRes = await axios.get('/api/discover/scholarships');
         const apiDiscoverList = discoverRes.data.map((s: any) => {
           // Add some randomization to eligibility so filtering actually works
           // Since the data is from RSS, it doesn't have strict criteria natively
