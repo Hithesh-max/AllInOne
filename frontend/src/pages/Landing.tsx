@@ -992,6 +992,8 @@ export const Landing: React.FC<LandingProps> = ({ onGetStarted }) => {
           </div>
         </div>
 
+      </section>
+
       {/* 5. LangGraph Agent Flow Architecture Showcase */}
       <section className="reveal-block w-full py-24 border-t border-white/5 bg-dark-900/30 z-10 relative">
         <div className="max-w-7xl mx-auto px-8 text-center space-y-16">
