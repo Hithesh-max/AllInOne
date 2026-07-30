@@ -111,7 +111,6 @@ export const Landing: React.FC<LandingProps> = ({ onGetStarted }) => {
     { name: 'Hackathon Scraper', desc: 'Track Devfolio/Devpost deadlines, verify eligibility, and structure team rules.', icon: Award, color: 'text-yellow-400 border-yellow-400/20' },
     { name: 'Scholarship Finder', desc: 'Scan post-matric portals and filter grants by CGPA, branches, and income limits.', icon: GraduationCap, color: 'text-emerald-400 border-emerald-400/20' },
     { name: 'Resume Optimizer', desc: 'Review bullet points, suggest projects, missing keywords, and draft cover letters.', icon: FileText, color: 'text-pink-400 border-pink-400/20' },
-    { name: 'Finance & Saving', desc: 'Log expenses, forecast month-end balances, and alert when takeout spikes.', icon: Wallet, color: 'text-amber-500 border-amber-500/20' },
     { name: 'Hydration & Calorie Hub', desc: 'Track weights, log calorie intake, and generate high-protein meal blueprints.', icon: Heart, color: 'text-red-400 border-red-400/20' },
     { name: 'Itinerary Travel Agent', desc: 'Draft day-by-day vacation maps, packing lists, weather alarms, and travel budgets.', icon: Compass, color: 'text-indigo-400 border-indigo-400/20' }
   ];
@@ -123,7 +122,7 @@ export const Landing: React.FC<LandingProps> = ({ onGetStarted }) => {
     },
     {
       q: "What is the role of LangGraph in the platform?",
-      a: "LangGraph coordinates our agentic chart state. The central Planner Node distributes student requests to specialized agents (Internships, Resume, Finance) based on your intent, aggregates their findings, and drafts a unified markdown output."
+      a: "LangGraph coordinates our agentic chart state. The central Planner Node distributes student requests to specialized agents (Internships, Resume, Scholarships) based on your intent, aggregates their findings, and drafts a unified markdown output."
     },
     {
       q: "How are the Opportunities crawled?",
@@ -131,7 +130,7 @@ export const Landing: React.FC<LandingProps> = ({ onGetStarted }) => {
     },
     {
       q: "Does this require any manual calendar sync?",
-      a: "No! The AI Planner automatically schedules relevant study, homework, or application deadlines to an integrated Calendar panel. You can check reminders, log expenses, and update CGPA metrics in real-time."
+      a: "No! The AI Planner automatically schedules relevant study, homework, or application deadlines to an integrated Calendar panel. You can check reminders, log study hours, and update CGPA metrics in real-time."
     }
   ];
 
@@ -671,7 +670,7 @@ export const Landing: React.FC<LandingProps> = ({ onGetStarted }) => {
                 </pre>
 
                 <p className="hero-desc text-slate-400 text-xs sm:text-sm max-w-2xl leading-relaxed">
-                  CampusCopilot parses user goals, delegates to specialized agents (Careers, Hackathons, Finance), updates calendars, and manages structured contexts from a unified IDE panel.
+                  CampusCopilot parses user goals, delegates to specialized agents (Careers, Hackathons, Scholarships), updates calendars, and manages structured contexts from a unified IDE panel.
                 </p>
 
                 {/* Action Buttons */}
@@ -729,8 +728,6 @@ export const Landing: React.FC<LandingProps> = ({ onGetStarted }) => {
           <span>GET /api/contests/leetcode-384 200 OK</span>
           <span className="text-brand-cyan">·</span>
           <span>PUT /api/resume/ats-score 200 OK</span>
-          <span className="text-brand-purple">·</span>
-          <span>POST /api/finance/expense/log 201 Created</span>
           <span className="text-brand-cyan">·</span>
           <span>GET /api/health/hydration-level 200 OK</span>
           <span className="text-brand-purple">·</span>
@@ -743,8 +740,6 @@ export const Landing: React.FC<LandingProps> = ({ onGetStarted }) => {
           <span>GET /api/contests/leetcode-384 200 OK</span>
           <span className="text-brand-cyan">·</span>
           <span>PUT /api/resume/ats-score 200 OK</span>
-          <span className="text-brand-purple">·</span>
-          <span>POST /api/finance/expense/log 201 Created</span>
           <span className="text-brand-cyan">·</span>
           <span>GET /api/health/hydration-level 200 OK</span>
           <span className="text-brand-purple">·</span>
@@ -767,11 +762,11 @@ export const Landing: React.FC<LandingProps> = ({ onGetStarted }) => {
             className="cyber-stat-card cursor-pointer group"
           >
             <div className="absolute top-5 right-5 h-2 w-2 rounded-full bg-brand-cyan group-hover:animate-ping opacity-0 group-hover:opacity-100 transition-opacity" />
-            <span className="text-[10px] text-slate-400 uppercase tracking-widest font-extrabold block mb-1">Founded At</span>
-            <h4 className="text-4xl font-black text-slate-300 stat-glow-text">2024</h4>
+            <span className="text-[10px] text-slate-400 uppercase tracking-widest font-extrabold block mb-1">Target Audience</span>
+            <h4 className="text-4xl font-black text-slate-300 stat-glow-text">Students</h4>
             <div className="stat-details">
               <p className="text-xs text-slate-400 leading-normal">
-                CampusCopilot was conceptualized to unify isolated academic and career coordination tracks into one interface.
+                Built specifically for college students to unify their academic, career, and productivity tracking in one dashboard.
               </p>
             </div>
           </div>
@@ -784,11 +779,11 @@ export const Landing: React.FC<LandingProps> = ({ onGetStarted }) => {
             className="cyber-stat-card cursor-pointer group"
           >
             <div className="absolute top-5 right-5 h-2 w-2 rounded-full bg-brand-cyan group-hover:animate-ping opacity-0 group-hover:opacity-100 transition-opacity" />
-            <span className="text-[10px] text-slate-400 uppercase tracking-widest font-extrabold block mb-1">Design Award</span>
-            <h4 className="text-4xl font-black text-slate-300 stat-glow-text">2025</h4>
+            <span className="text-[10px] text-slate-400 uppercase tracking-widest font-extrabold block mb-1">Active Modules</span>
+            <h4 className="text-4xl font-black text-slate-300 stat-glow-text">7+</h4>
             <div className="stat-details">
               <p className="text-xs text-slate-400 leading-normal">
-                Awarded honors for glassmorphism panels, interactive nodes, and motion-page design mechanics.
+                Features integrated tracking for Scholarships, Hackathons, Internships, Contests, Resume parsing, and Study planning.
               </p>
             </div>
           </div>
@@ -801,11 +796,11 @@ export const Landing: React.FC<LandingProps> = ({ onGetStarted }) => {
             className="cyber-stat-card cursor-pointer group"
           >
             <div className="absolute top-5 right-5 h-2 w-2 rounded-full bg-brand-cyan group-hover:animate-ping opacity-0 group-hover:opacity-100 transition-opacity" />
-            <span className="text-[10px] text-slate-400 uppercase tracking-widest font-extrabold block mb-1">Active Users</span>
-            <h4 className="text-4xl font-black text-slate-300 stat-glow-text">3900+</h4>
+            <span className="text-[10px] text-slate-400 uppercase tracking-widest font-extrabold block mb-1">Data Sources</span>
+            <h4 className="text-4xl font-black text-slate-300 stat-glow-text">Live</h4>
             <div className="stat-details">
               <p className="text-xs text-slate-400 leading-normal">
-                Students are actively coordinating schedules, optimizing resumes, and executing scraper pipelines daily.
+                Real-time RSS feeds and API integrations constantly fetch the newest opportunities directly to your dashboard.
               </p>
             </div>
           </div>
@@ -818,11 +813,11 @@ export const Landing: React.FC<LandingProps> = ({ onGetStarted }) => {
             className="cyber-stat-card cursor-pointer group"
           >
             <div className="absolute top-5 right-5 h-2 w-2 rounded-full bg-brand-cyan group-hover:animate-ping opacity-0 group-hover:opacity-100 transition-opacity" />
-            <span className="text-[10px] text-slate-400 uppercase tracking-widest font-extrabold block mb-1">Integrated APIs</span>
-            <h4 className="text-4xl font-black text-slate-300 stat-glow-text">25.5K+</h4>
+            <span className="text-[10px] text-slate-400 uppercase tracking-widest font-extrabold block mb-1">Automation</span>
+            <h4 className="text-4xl font-black text-slate-300 stat-glow-text">24/7</h4>
             <div className="stat-details">
               <p className="text-xs text-slate-400 leading-normal">
-                Connecting crawlers to scholarships, Devpost hackathons, and regional university portals.
+                Background worker nodes automatically sync data and refresh your application statuses continuously.
               </p>
             </div>
           </div>
@@ -997,95 +992,6 @@ export const Landing: React.FC<LandingProps> = ({ onGetStarted }) => {
           </div>
         </div>
 
-        {/* Detail Block 3: Personal Companion Suite */}
-        <div className="reveal-block grid grid-cols-1 lg:grid-cols-12 gap-16 items-center">
-          <div className="lg:col-span-5 space-y-5 text-left font-sans">
-            <span className="text-xs text-amber-500 uppercase tracking-widest font-extrabold font-mono">// Modules / Finance</span>
-            <h3 className="text-3xl sm:text-4xl lg:text-5xl font-extrabold text-slate-100 leading-tight">
-              Personal Finance Companion
-            </h3>
-            <p className="text-slate-400 text-sm leading-relaxed">
-              Log expenditures and calculate balance thresholds. The module warns you when takeout spend spikes, and drafts savings suggestions to maximize cash retention.
-            </p>
-            <ul className="space-y-2.5 text-xs text-slate-400">
-              <li className="flex items-center gap-3">
-                <div className="h-1.5 w-1.5 rounded-full bg-amber-500" />
-                Evaluates daily meals, weight targets, and macros.
-              </li>
-              <li className="flex items-center gap-3">
-                <div className="h-1.5 w-1.5 rounded-full bg-amber-500" />
-                Tracks spending channels against monthly balances.
-              </li>
-            </ul>
-          </div>
-
-          {/* Hover Morph Card */}
-          <div className="lg:col-span-7 flex justify-center lg:justify-end">
-            <div 
-              onMouseMove={handleCardTilt}
-              onMouseLeave={handleCardTiltLeave}
-              className="hero-parallax hover-morph-card glass-card border border-white/5 hover:border-amber-500/25 transition-colors duration-300 group text-left relative"
-            >
-              {/* Front view: TypeScript Code */}
-              <div 
-                className="morph-view-code"
-                onMouseEnter={() => handleCursorHover("CODE", true)}
-                onMouseLeave={() => handleCursorHover("", false)}
-              >
-                <div className="flex justify-between items-center mb-4 select-none">
-                  <span className="text-[10px] text-slate-500 font-mono">📄 financeLedger.ts</span>
-                  <Wallet className="h-3.5 w-3.5 text-amber-500" />
-                </div>
-                <pre className="text-slate-300 text-[11px] leading-relaxed font-mono overflow-x-auto bg-black/35 p-4 rounded-xl border border-white/5 flex-1">
-                  <code>
-                    <span className="text-purple-400">function</span> <span className="text-yellow-300">analyzeTakeout</span>(spend: <span className="text-teal-300">number</span>, target: <span className="text-teal-300">number</span>): <span className="text-teal-300">string</span> {"{"}
-                    <br />
-                    &nbsp;&nbsp;<span className="text-purple-400">if</span> (spend &gt; target * 0.8) {"{"}
-                    <br />
-                    &nbsp;&nbsp;&nbsp;&nbsp;<span className="text-purple-400">return</span> <span className="text-green-300">"Warning: spend is 15% above target!"</span>;
-                    <br />
-                    &nbsp;&nbsp;{"}"}
-                    <br />
-                    &nbsp;&nbsp;<span className="text-purple-400">return</span> <span className="text-green-300">"Budget status: Nominal"</span>;
-                    <br />
-                    {"}"}
-                  </code>
-                </pre>
-              </div>
-
-              {/* Back view: Feature Illustration */}
-              <div 
-                className="morph-view-feature"
-                onMouseEnter={() => handleCursorHover("PREVIEW", true)}
-                onMouseLeave={() => handleCursorHover("", false)}
-              >
-                <div className="flex justify-between items-center mb-4 select-none font-mono">
-                  <span className="text-[10px] text-slate-400 tracking-widest font-extrabold uppercase">Budget &amp; Expense Logger</span>
-                  <Wallet className="h-4 w-4 text-amber-500" />
-                </div>
-                <div className="space-y-3 font-sans text-left flex-1 flex flex-col justify-center">
-                  <div className="grid grid-cols-2 gap-3.5">
-                    <div className="p-3 rounded-xl bg-dark-700/50 border border-white/5">
-                      <span className="text-[9px] text-slate-400 uppercase tracking-wider font-semibold">Target Budget</span>
-                      <h5 className="text-sm font-bold text-slate-100 mt-1">₹5,000.00</h5>
-                    </div>
-                    <div className="p-3 rounded-xl bg-dark-700/50 border border-white/5">
-                      <span className="text-[9px] text-slate-400 uppercase tracking-wider font-semibold">Logged Spend</span>
-                      <h5 className="text-sm font-bold text-rose-400 mt-1">₹3,200.00</h5>
-                    </div>
-                  </div>
-                  <div className="p-3 rounded-xl bg-amber-500/5 border border-amber-500/10">
-                    <p className="text-[10px] text-amber-500 leading-relaxed font-semibold">
-                      ⚠️ Takeout food spend is 15% above normal. Try cooking at home to retain ₹1,800.00 of your budget.
-                    </p>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
-
       {/* 5. LangGraph Agent Flow Architecture Showcase */}
       <section className="reveal-block w-full py-24 border-t border-white/5 bg-dark-900/30 z-10 relative">
         <div className="max-w-7xl mx-auto px-8 text-center space-y-16">
@@ -1126,10 +1032,6 @@ export const Landing: React.FC<LandingProps> = ({ onGetStarted }) => {
                 <circle r="4" fill="#8b5cf6">
                   <animateMotion dur="2s" repeatCount="indefinite" path="M 400 160 L 650 90" />
                 </circle>
-                
-                {/* Planner to Finance */}
-                <path id="flow-finance" d="M 400 160 L 650 230" stroke="rgba(6, 182, 212, 0.15)" strokeWidth="2" fill="none" />
-                <path d="M 400 160 L 650 230" stroke="#06b6d4" strokeWidth="2" fill="none" className="animate-flow-pulse" />
                 <circle r="4" fill="#06b6d4">
                   <animateMotion dur="2.4s" repeatCount="indefinite" path="M 400 160 L 650 230" />
                 </circle>
